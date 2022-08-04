@@ -1,0 +1,57 @@
+.navbar {
+  .top {
+    .logoAirbnb-white {
+      color: var(--white);
+    }
+    .logoAirbnb-pink {
+      color: var(--logo-color);
+    }
+
+    .searchChoise {
+      // color: var(--font-color-1);
+      color: var(--text-color-dark);
+
+      span {
+        transition: all 0.3s;
+      }
+
+      span:after {
+        transition: all 0.3s;
+      }
+      span:hover:after {
+        background: var(--logo-color);
+      }
+    }
+
+    .userNavbar {
+      .profile {
+        .loginOption {
+          display: none;
+        }
+
+        &:hover {
+          .loginOption {
+            display: flex;
+            position: absolute;
+          }
+        }
+      }
+    }
+  }
+
+  .bottom {
+    form {
+      .shadow-around {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+          rgba(0, 0, 0, 0.22) 0px 10px 10px;
+        background: #fff;
+      }
+
+      span {
+        .searchButton {
+          background: var(--button-color);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+.roomList {
+  .roomItem {
+    .item {
+      .img {
+        .swiper-pagination-bullet {
+          background: #ffffff;
+          opacity: 1;
+        }
+        .swiper-pagination-bullet-active {
+          background: #ffffff;
+        }
+
+        .swiper-button-next {
+          right: 0;
+        }
+
+        .swiper-button-prev {
+          left: 0;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+          display: none;
+        }
+
+        &:hover .swiper-button-next,
+        &:hover .swiper-button-prev {
+          display: flex;
+          color: white;
+          background: rgba(148, 146, 146, 0.767);
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          transform: scale(0.5);
+        }
+      }
+    }
+  }
+}
