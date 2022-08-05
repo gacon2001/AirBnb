@@ -8,8 +8,13 @@
     }
 
     .searchChoise {
-      // color: var(--font-color-1);
-      color: var(--text-color-dark);
+      .fontColorFull {
+        color: var(--font-color-1);
+      }
+
+      .fontColorSmall {
+        color: var(--text-color-dark);
+      }
 
       span {
         transition: all 0.3s;

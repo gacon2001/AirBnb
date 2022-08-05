@@ -6,7 +6,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-export default function NavbarTop({ type }) {
+export default function NavbarTop({ type, setIsChoose }) {
   return (
     <div className="top grid grid-cols-[1.2fr,1.2fr,0.7fr,auto] w-[1120px] mx-auto ">
       <div

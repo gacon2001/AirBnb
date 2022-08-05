@@ -8,17 +8,31 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Progress } from "antd";
+import { useRef, useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import GalleryImg from "../../components/GalleryImg/GalleryImg";
-import Navbar from "../../components/Navbar/Navbar";
+import NavbarFull from "../../components/Navbar/NavbarFull";
+import NavbarSmall from "../../components/Navbar/NavbarSmall";
 import RoomUtil from "../../components/RoomUtil/RoomUtil";
+import useOnClickOutside from "../../HOOK/use-onclick-outside";
 import "./roomDetail.scss";
 
 export default function RoomDetailPage() {
+  const [isNavChoose, setIsNavChoose] = useState(false);
+
+  const ref = useRef();
+  useOnClickOutside(ref, () => setIsNavChoose(false));
   return (
     <>
-      <header className="header">
-        <Navbar type="list" />
+      <header className="header" ref={ref}>
+        {/* <Navbar type="list" /> */}
+        {!isNavChoose && (
+          <NavbarSmall
+            setIsNavChoose={setIsNavChoose}
+            isNavChoose={isNavChoose}
+          />
+        )}
+        {isNavChoose && <NavbarFull />}
       </header>
       <main>
         <div className="w-[1120px] mx-auto">
@@ -165,10 +179,10 @@ export default function RoomDetailPage() {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="feather feather-calendar"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="feather feather-calendar"
                     >
                       <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                       <line x1="16" y1="2" x2="16" y2="6" />

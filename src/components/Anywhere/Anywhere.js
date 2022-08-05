@@ -3,8 +3,8 @@ import { dataAnywhere } from "./dataAnyWhere";
 
 export default function Anywhere() {
   return (
-    <div className="nearby ">
-      <div className="container mx-auto my-14 text-left">
+    <div className="anyWhere ">
+      <div className="w-[1120px] mx-auto my-14 text-left">
         <h2 className="mb-4 text-2xl font-bold md:mb-4 lg:mb-8 md:text-3xl lg:text-4xl">
           Live Anywhere
         </h2>
@@ -13,8 +13,8 @@ export default function Anywhere() {
             return (
               <>
                 <a href="/">
-                  <div className="p-2 duration-300 lg:p-3 gap-y-4 active:scale-105 active:bg-gray-200 active:bg-opacity-40 rounded-xl">
-                    <div className=" w-full h-40 mb-2 md:h-60 lg:h-80 overflow-hidden rounded-xl">
+                  <div className="p-2 duration-300 lg:p-3 gap-y-4 active:scale-105 active:bg-gray-200 active:bg-opacity-40 rounded-xl hover:scale-105  ">
+                    <div className=" w-full h-40 mb-2 md:h-52 lg:h-60 overflow-hidden rounded-xl">
                       <div className="block overflow-hidden box-border">
                         <img
                           src={item.src}

@@ -1,12 +1,14 @@
 import Navbar from "../Navbar/Navbar";
 import houseNearSeaside from "../../assets/home/houseNearSeaside.jpg";
 import "./header.scss";
+import NavbarFull from "../Navbar/NavbarFull";
 
 export default function Header() {
   return (
     <div className="header pb-8 w-screen h-screen bg-black">
-      <Navbar />
-      <div className="container mx-auto w-full h-[550px] mt-7 px-12 ">
+      {/* <Navbar /> */}
+      <NavbarFull type="home" />
+      <div className="w-[1120px] mx-auto  h-[550px] mt-7  ">
         <img
           src={houseNearSeaside}
           alt=""

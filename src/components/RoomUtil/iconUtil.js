@@ -45,16 +45,14 @@ export const dataIcon = [
     file: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        // xmlns:xlink="http://www.w3.org/1999/xlink"
         version="1.1"
         id="Layer_1"
         x="0px"
         y="0px"
         viewBox="0 0 24 24"
-        enable-background="new 0 0 24 24"
+        enableBackground="new 0 0 24 24"
         width="40"
         height="40"
-        // xml:space="preserve"
       >
         <g>
           <path
@@ -144,10 +142,10 @@ export const dataIcon = [
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="feather feather-wifi"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="feather feather-wifi"
         width="40"
         height="40"
       >
