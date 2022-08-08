@@ -1,4 +1,5 @@
 import "./navbar.scss";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -38,7 +39,7 @@ export default function NavbarFull({ type }) {
 
   return (
     <div
-      className={`navbar py-5  ${type !== "home" ? "bg-white shadow-md" : ""}`}
+      className={`navbar py-5 ${type !== "home" ? "bg-white shadow-md" : ""}`}
     >
       <div className="top grid grid-cols-[1.0fr,1.4fr,0.7fr,auto] w-[1120px] mx-auto ">
         <div
@@ -110,13 +111,14 @@ export default function NavbarFull({ type }) {
                 </span>
               </div>
 
-              <div className="loginOption absolute top-12 right-0 z-40">
+              <div className="loginOption absolute top-12 right-0 z-[51]">
                 <div className="w-44 h-max flex flex-col mt-4 pl-3 pr-2 py-5 bg-white border border-gray-200 rounded-xl hover:shadow-xl shadow-md ">
-                  <span className="py-2 font-semibold hover:bg-gray-200 hover:shadow-sm hover:rounded-xl cursor-pointer">
-                    Sign up
+                  <span className="py-2 font-semibold hover:bg-gray-200 hover:shadow-sm hover:rounded-xl cursor-pointer ">
+                    <Link to="/register">Sign up</Link>
                   </span>
+
                   <span className="py-2 font-semibold hover:bg-gray-200 hover:shadow-sm hover:rounded-xl cursor-pointer">
-                    Login
+                    <Link to="/login">Login</Link>
                   </span>
                 </div>
               </div>
@@ -126,7 +128,7 @@ export default function NavbarFull({ type }) {
       </div>
 
       <div className={`bottom`}>
-        <div className="w-full max-w-4xl mx-auto mt-5 rounded-full bg-white shadow-md border border-gray-200 relative z-30">
+        <div className="w-full max-w-4xl mx-auto mt-5 rounded-full bg-white shadow-md border border-gray-200 relative z-50">
           <form
             ref={ref}
             action=""

@@ -46,7 +46,7 @@ export default function RoomList() {
           </div>
         </div>
       </div>
-      <div className="right w-1/2 h-screen">
+      <div className="right w-1/2 h-screen ">
         <MapDetail />
       </div>
     </div>

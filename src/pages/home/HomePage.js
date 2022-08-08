@@ -7,7 +7,7 @@ import "./homePage.scss";
 export default function HomePage() {
   return (
     <>
-      <header>
+      <header className="overflow-hidden">
         <Header />
       </header>
       <main>

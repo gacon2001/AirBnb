@@ -1,0 +1,54 @@
+.login {
+  .form {
+    .formInput {
+      form {
+        .ant-form-item {
+          .ant-form-item-control {
+            .ant-form-item-control-input {
+              .ant-form-item-control-input-content {
+                .ant-input:active,
+                .ant-input:hover,
+                .ant-input-password:active,
+                .ant-input-password:hover {
+                  border-color: var(--icon-color) !important;
+                  box-shadow: 0 0 0 2px
+                    rgba($color: var(--icon-color), $alpha: 0.2);
+                }
+                .ant-input:focus,
+                .ant-input-password:focus {
+                  border-color: var(--icon-color) !important;
+                  box-shadow: 0 0 0 2px
+                    rgba($color: var(--icon-color), $alpha: 0.2);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      button.loginButton {
+        background: var(--button-color);
+      }
+      button.loginButton:active,
+      button.loginButton:hover,
+      button.loginButton:focus {
+        color: var(--white);
+        border-color: var(--icon-color);
+      }
+      .rememberUser {
+        .ant-form-item {
+          margin-bottom: 0;
+
+          .ant-checkbox-wrapper {
+            display: flex;
+            align-items: center;
+
+            span {
+              display: inline-block;
+            }
+          }
+        }
+      }
+    }
+  }
+}
