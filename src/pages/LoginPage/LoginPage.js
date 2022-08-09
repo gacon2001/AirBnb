@@ -61,8 +61,8 @@ const LoginPage = () => {
           <div className="w-screen h-screen relative">
             <Map
               initialViewState={{
-                longitude: -74.0047821180712,
-                latitude: 40.702531108023976,
+                longitude: 126.662227,
+                latitude: 37.417303,
                 zoom: 10,
               }}
               style={{ width: "100%", height: "100vh" }}

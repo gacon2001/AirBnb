@@ -20,9 +20,9 @@ const RegistrationPage = () => {
       <div className="w-screen h-screen relative">
         <Map
           initialViewState={{
-            longitude: -74.0047821180712,
-            latitude: 40.702531108023976,
-            zoom: 10,
+            longitude: 106.934613,
+            latitude: 20.935604,
+            zoom: 12,
           }}
           style={{ width: "100%", height: "100vh" }}
           mapStyle="mapbox://styles/sonythirsty/cl639s1o2008u14ocu0y4u5ql"

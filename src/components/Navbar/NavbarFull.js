@@ -8,8 +8,9 @@ import {
   faMagnifyingGlass,
   faMinus,
   faPlus,
+  faWarning,
 } from "@fortawesome/free-solid-svg-icons";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import useOnClickOutside from "../../HOOK/use-onclick-outside";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
@@ -17,12 +18,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { Avatar, Badge, notification } from "antd";
 import { localStorageService } from "./../../services/localStorageService";
 import { setUserLogin } from "../../redux/slices/userSlice";
+import { locationService } from "../../services/locationService";
 
 export default function NavbarFull({ type }) {
   const [isLocation, setIsLocation] = useState(false);
   const [isCheckIn, setIsCheckIn] = useState(false);
   const [isCheckOut, setIsCheckOut] = useState(false);
   const [isGuest, setIsGuest] = useState(false);
+  const [search, setSearch] = useState([]);
+  const [location, setLocation] = useState("");
+  console.log("location", location);
+
   let userInfor = useSelector((state) => state.userSlice.userInfo);
   let dispatch = useDispatch();
   let navigate = useNavigate();
@@ -42,6 +48,35 @@ export default function NavbarFull({ type }) {
       navigate("/login");
     }, 1500);
   };
+
+  const debounce = (func) => {
+    let timer;
+    return function (...args) {
+      const context = this;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        timer = null;
+        func.apply(context, args);
+      }, 500);
+    };
+  };
+
+  let handleOnChange = (e) => {
+    const value = e.target.value;
+    console.log("value", value);
+    locationService
+      .getLocation(value)
+      .then((res) => {
+        console.log("res", res);
+        setSearch(res.data);
+        setIsLocation(!isLocation);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
+
+  const optimisedVersion = useCallback(debounce(handleOnChange), []);
 
   const [date, setDate] = useState([
     {
@@ -195,14 +230,16 @@ export default function NavbarFull({ type }) {
                 </span>
                 <input
                   type="text"
-                  placeholder="Search Destination"
+                  placeholder="Try 'Hạ Long'"
                   className="w-full text-sm text-gray-500 placeholder-gray-300 truncate bg-transparent outline-none"
+                  name={"search"}
                   onClick={() => {
-                    setIsLocation(!isLocation);
+                    // setIsLocation(!isLocation);
                     setIsCheckIn(false);
                     setIsCheckOut(false);
                     setIsGuest(false);
                   }}
+                  onChange={optimisedVersion}
                 />
               </div>
               <div className="border-r my-5 "></div>
@@ -211,25 +248,33 @@ export default function NavbarFull({ type }) {
                   isLocation ? "" : "hidden"
                 }`}
               >
-                <div className=" w-80 h-max flex flex-col my-3 pl-3 pr-2 py-5 bg-white border border-gray-200 rounded-3xl hover:shadow-xl shadow-md ">
-                  <span className="py-1 px-2 my-2 hover:bg-gray-400 hover:bg-opacity-10 hover:shadow-sm hover:rounded-xl cursor-pointer text-sm flex items-center truncate">
-                    <span>
-                      <FontAwesomeIcon
-                        icon={faLocationDot}
-                        className="text-xl py-2 px-3 mr-2 bg-gray-200 rounded-md border-gray-500 text-gray-700"
-                      />
-                    </span>{" "}
-                    Long Xuyên, An Giang, Province
-                  </span>
-                  <span className="py-1 px-2 my-2 hover:bg-gray-400 hover:bg-opacity-10 hover:shadow-sm hover:rounded-xl cursor-pointer text-sm flex items-center truncate">
-                    <span>
-                      <FontAwesomeIcon
-                        icon={faLocationDot}
-                        className="text-xl py-2 px-3 mr-2 bg-gray-200 rounded-md border-gray-500 text-gray-700"
-                      />
-                    </span>{" "}
-                    Long Xuyên, An Giang, Province
-                  </span>
+                <div
+                  className={`w-max h-max flex flex-col my-3 pl-3 pr-2 py-1 bg-white border border-gray-200 rounded-3xl hover:shadow-xl shadow-md ${
+                    search.length ? "" : "hidden"
+                  }`}
+                >
+                  {search?.length > 0 &&
+                    search?.map((item, i) => {
+                      return (
+                        <span
+                          className="py-1 px-2 my-1 hover:bg-gray-400 hover:bg-opacity-10 hover:shadow-sm hover:rounded-xl cursor-pointer text-sm flex items-center truncate"
+                          key={i}
+                          onClick={() => {
+                            setLocation(item.name);
+                          }}
+                        >
+                          <span>
+                            <FontAwesomeIcon
+                              icon={faLocationDot}
+                              className="text-xl py-2 px-3 mr-2 bg-gray-200 rounded-md border-gray-500 text-gray-700"
+                            />
+                          </span>
+                          {search?.length
+                            ? `${item.name}, ${item.province}`
+                            : "Please try again or try 'Hạ Long'"}
+                        </span>
+                      );
+                    })}
                 </div>
               </div>
             </span>
