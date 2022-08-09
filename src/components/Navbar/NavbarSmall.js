@@ -5,9 +5,32 @@ import {
   faCircleUser,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Avatar, Badge, notification } from "antd";
+import { localStorageService } from "./../../services/localStorageService";
+import { setUserLogin } from "../../redux/slices/userSlice";
 
 export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
+  let userInfor = useSelector((state) => state.userSlice.userInfo);
+  let dispatch = useDispatch();
+  let navigate = useNavigate();
+  const openNotificationWithIcon = (type, message, description) => {
+    notification[type]({
+      message: message,
+      description: description,
+    });
+  };
+
+  let handleLogout = () => {
+    openNotificationWithIcon("success", "Goodbye " + userInfor.name);
+    dispatch(setUserLogin(null));
+    localStorageService.removeUserInfo();
+    setTimeout(() => {
+      navigate("/login");
+    }, 1500);
+  };
+
   return (
     <div
       className={`navbar py-5 ${type !== "home" ? "bg-white shadow-md" : ""} `}
@@ -86,19 +109,43 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
                   <FontAwesomeIcon icon={faBars} className="" />
                 </span>
                 <span className="h-10 text-4xl text-gray-400">
-                  <FontAwesomeIcon icon={faCircleUser} />
+                  {!userInfor && <FontAwesomeIcon icon={faCircleUser} />}
+                  {userInfor && (
+                    <Badge dot>
+                      <Avatar
+                        size={36}
+                        className="mb-4"
+                        src={userInfor.avatar}
+                      />
+                    </Badge>
+                  )}
                 </span>
               </div>
 
               <div className="loginOption absolute top-12 right-0 z-40">
-                <div className="w-44 h-max flex flex-col mt-4 pl-3 pr-2 py-5 bg-white border border-gray-200 rounded-xl hover:shadow-xl shadow-md ">
-                  <span className="py-2 font-semibold hover:bg-gray-200 hover:shadow-sm hover:rounded-xl cursor-pointer">
-                    <Link to="/register">Sign up</Link>
-                  </span>
-                  <span className="py-2 font-semibold hover:bg-gray-200 hover:shadow-sm hover:rounded-xl cursor-pointer">
-                    <Link to="/login">Login</Link>
-                  </span>
-                </div>
+                {!userInfor && (
+                  <div className="w-44 h-max flex flex-col mt-4 pl-3 pr-2 py-5 bg-white border border-gray-200 rounded-xl hover:shadow-xl shadow-md ">
+                    <span className="py-2 my-2 font-semibold hover:bg-gray-200 hover:shadow-sm hover:rounded-xl cursor-pointer">
+                      <Link to="/register">Sign up</Link>
+                    </span>
+                    <span className="py-2 my-2 font-semibold hover:bg-gray-200 hover:shadow-sm hover:rounded-xl cursor-pointer">
+                      <Link to="/login">Login</Link>
+                    </span>
+                  </div>
+                )}
+                {userInfor && (
+                  <div className="w-44 h-max flex flex-col mt-4 pl-3 pr-2 py-5 bg-white border border-gray-200 rounded-xl hover:shadow-xl shadow-md ">
+                    <span className="py-2 my-2 font-semibold hover:bg-gray-200 hover:shadow-sm hover:rounded-xl cursor-pointer">
+                      <Link to="/person/:id">Personal Page</Link>
+                    </span>
+                    <span
+                      className="py-2 my-2 font-semibold hover:bg-gray-200 hover:shadow-sm hover:rounded-xl cursor-pointer"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

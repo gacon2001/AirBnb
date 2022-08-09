@@ -27,10 +27,8 @@ const LoginPage = () => {
     userService
       .postLogin(values)
       .then((res) => {
-        // console.log("res", res);
         localStorageService.setUserInfo(res.data.user);
         dispatch(setUserLogin(res.data.user));
-        // message.success(res.data.message);
         openNotificationWithIcon(
           "success",
           "Xin chào " + res.data.user.name,
@@ -42,7 +40,6 @@ const LoginPage = () => {
         }, 2000);
       })
       .catch((err) => {
-        // console.log("err", err);
         openNotificationWithIcon(
           "error",
           "Login failed",
