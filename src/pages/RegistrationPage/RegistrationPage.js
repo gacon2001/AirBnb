@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button, Form, Input, Select, DatePicker } from "antd";
 import React from "react";
 import "./registration.scss";
-import bgImg from "../../assets/registration/bg-6.jpg";
+import bgImg from "../../assets/registration/bg-5.jpg";
 import Map from "react-map-gl";
 const { Option } = Select;
 

@@ -8,32 +8,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Progress } from "antd";
-import { useRef, useState } from "react";
-import Footer from "../../components/Footer/Footer";
 import GalleryImg from "../../components/GalleryImg/GalleryImg";
-import NavbarFull from "../../components/Navbar/NavbarFull";
-import NavbarSmall from "../../components/Navbar/NavbarSmall";
 import RoomUtil from "../../components/RoomUtil/RoomUtil";
-import useOnClickOutside from "../../HOOK/use-onclick-outside";
 import "./roomDetail.scss";
 
 export default function RoomDetailPage() {
-  const [isNavChoose, setIsNavChoose] = useState(false);
-
-  const ref = useRef();
-  useOnClickOutside(ref, () => setIsNavChoose(false));
   return (
     <>
-      <header className="header" ref={ref}>
-        {/* <Navbar type="list" /> */}
-        {!isNavChoose && (
-          <NavbarSmall
-            setIsNavChoose={setIsNavChoose}
-            isNavChoose={isNavChoose}
-          />
-        )}
-        {isNavChoose && <NavbarFull />}
-      </header>
       <main>
         <div className="w-[1120px] mx-auto">
           <div className="pt-6">
@@ -547,9 +528,6 @@ export default function RoomDetailPage() {
           </div>
         </div>
       </main>
-      <footer>
-        <Footer />
-      </footer>
     </>
   );
 }

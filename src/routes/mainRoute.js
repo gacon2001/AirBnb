@@ -4,6 +4,7 @@ import RegistrationPage from "../pages/RegistrationPage/RegistrationPage";
 import RoomListPage from "../pages/RoomListPage/RoomListPage";
 import RoomDetailPage from "./../pages/RoomDetailPage/RoomDetailPage";
 import PageNotFound from "./../pages/404Page/PageNotFound";
+import LayoutTheme from "../HOC/LayoutTheme";
 
 export const mainRoutes = [
   {
@@ -13,7 +14,15 @@ export const mainRoutes = [
   },
   { path: "/login", element: <LoginPage /> },
   { path: "/register", element: <RegistrationPage /> },
-  { path: "/listhotel", element: <RoomListPage /> },
-  { path: "/hotel/:id", element: <RoomDetailPage /> },
+  {
+    path: "/listhotel",
+    element: <LayoutTheme Element={RoomListPage} />,
+    isUseLayOut: true,
+  },
+  {
+    path: "/hotel/:id",
+    element: <LayoutTheme Element={RoomDetailPage} />,
+    isUseLayOut: true,
+  },
   { path: "/*", element: <PageNotFound /> },
 ];

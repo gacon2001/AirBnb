@@ -15,6 +15,16 @@ function App() {
       <BrowserRouter>
         <Routes>
           {mainRoutes.map((route, i) => {
+            if (route.isUseLayOut) {
+              return (
+                <Route
+                  key={i}
+                  path={route.path}
+                  element={route.element}
+                  exact={route.exact}
+                />
+              );
+            }
             return (
               <Route
                 key={i}
