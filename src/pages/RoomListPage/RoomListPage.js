@@ -9,6 +9,7 @@ export default function RoomListPage() {
   const [locationInfo, setLocationInfo] = useState(location.state.locationInfo);
 
   const [nameOfPlace, setNameOfPlace] = useState("");
+  const [province, setProvince] = useState("");
 
   const [listHotel, setListHotel] = useState([]);
 
@@ -19,6 +20,7 @@ export default function RoomListPage() {
         // console.log("res", res);
         setListHotel(res.data);
         setNameOfPlace(res.data[0].locationId.name);
+        setProvince(res.data[0].locationId.province);
       })
       .catch((err) => {
         console.log("err", err);
@@ -28,7 +30,11 @@ export default function RoomListPage() {
   return (
     <>
       <main>
-        <RoomList list={listHotel} placeName={nameOfPlace} />
+        <RoomList
+          list={listHotel}
+          placeName={nameOfPlace}
+          province={province}
+        />
       </main>
     </>
   );

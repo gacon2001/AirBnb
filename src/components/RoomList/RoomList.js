@@ -4,9 +4,9 @@ import SimpleBarReact from "simplebar-react";
 import MapDetail from "./MapDetail";
 import { removeVietnameseTones } from "../../services/convertService";
 
-export default function RoomList({ list, placeName }) {
-  let nameConvert = removeVietnameseTones(placeName);
-  console.log("nameConvert", nameConvert);
+export default function RoomList({ list, placeName, province }) {
+  let provinceConvert = removeVietnameseTones(province);
+  // console.log("provinceConvert", provinceConvert);
 
   return (
     <div className="roomList flex">
@@ -51,7 +51,7 @@ export default function RoomList({ list, placeName }) {
         </div>
       </div>
       <div className="right w-1/2 h-screen ">
-        <MapDetail />
+        <MapDetail province={provinceConvert} />
       </div>
     </div>
   );

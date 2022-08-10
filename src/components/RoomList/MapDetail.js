@@ -1,29 +1,51 @@
 import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Map, { Marker } from "react-map-gl";
+import { ACCESS_POSITION_STACK, MAP_ACCESS } from "../../services/configURL";
 import { dataMaps } from "./dataMap";
+import { locationService } from "./../../services/locationService";
 
-export default function MapDetail() {
+export default function MapDetail({ province }) {
   const [selected, setSelected] = useState([]);
+  const [longitude, setLongitude] = useState(null);
+  const [latitude, setLatitude] = useState(null);
+  console.log("longitude", longitude, latitude);
 
   const handleChoose = (i) => {
     setSelected((state) => {
       return state.includes(i) ? state.filter((n) => n !== i) : [...state, i];
     });
   };
+  const params = {
+    access_key: ACCESS_POSITION_STACK,
+    query: province,
+  };
+
+  useEffect(() => {
+    locationService
+      .getLocationLongLat(params)
+      .then((res) => {
+        console.log("res", res.data);
+        setLongitude(res.data.data[0].longitude);
+        setLatitude(res.data.data[0].latitude);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }, []);
 
   return (
     <div>
       <Map
         initialViewState={{
-          longitude: 106.7,
-          latitude: 10.77,
+          longitude: `${longitude ? longitude : 106.7}`,
+          latitude: `${latitude ? latitude : 10.77}`,
           zoom: 12,
         }}
         style={{ width: "100%", height: "100vh" }}
         mapStyle="mapbox://styles/sonythirsty/cl639s1o2008u14ocu0y4u5ql"
-        mapboxAccessToken="pk.eyJ1Ijoic29ueXRoaXJzdHkiLCJhIjoiY2w2Mnk0aGloMGptODNicGZsbTI4c3djbCJ9.V1q6BGsY6zc8OM3AhJ10wA"
+        mapboxAccessToken={MAP_ACCESS}
       >
         {dataMaps.map((item, i) => {
           return (
