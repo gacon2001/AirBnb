@@ -10,7 +10,7 @@ import {
   faPlus,
   faWarning,
 } from "@fortawesome/free-solid-svg-icons";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import useOnClickOutside from "../../HOOK/use-onclick-outside";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
@@ -19,20 +19,56 @@ import { Avatar, Badge, notification } from "antd";
 import { localStorageService } from "./../../services/localStorageService";
 import { setUserLogin } from "../../redux/slices/userSlice";
 import { locationService } from "../../services/locationService";
+import {
+  setSearchDateInfo,
+  setSearchLocation,
+  setSearchOption,
+} from "../../redux/slices/searchSlice";
 
 export default function NavbarFull({ type }) {
-  const [isLocation, setIsLocation] = useState(false);
-  const [isCheckIn, setIsCheckIn] = useState(false);
-  const [isCheckOut, setIsCheckOut] = useState(false);
-  const [isGuest, setIsGuest] = useState(false);
-  const [search, setSearch] = useState([]);
-  const [location, setLocation] = useState("");
-  console.log("location", location);
-
-  let userInfor = useSelector((state) => state.userSlice.userInfo);
   let dispatch = useDispatch();
   let navigate = useNavigate();
+  const ref = useRef();
+  const locationRef = useRef();
 
+  const [isLocation, setIsLocation] = useState(false);
+  const [location, setLocation] = useState("");
+
+  const [isCheckIn, setIsCheckIn] = useState(false);
+  const [isCheckOut, setIsCheckOut] = useState(false);
+  const [date, setDate] = useState([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: "selection",
+    },
+  ]);
+
+  const [isGuest, setIsGuest] = useState(false);
+  const [option, setOption] = useState({
+    adult: 1,
+    children: 0,
+    pet: 0,
+  });
+  console.log("option", option);
+
+  const handleOption = (name, operation) => {
+    setOption((option) => {
+      return {
+        ...option,
+        [name]: operation === "i" ? option[name] + 1 : option[name] - 1,
+      };
+    });
+  };
+
+  const handleSearch = () => {
+    dispatch(setSearchDateInfo(date[0]));
+    dispatch(setSearchOption(option));
+    navigate("/listhotel");
+  };
+
+  //render user avatar
+  let userInfor = useSelector((state) => state.userSlice.userInfo);
   const openNotificationWithIcon = (type, message, description) => {
     notification[type]({
       message: message,
@@ -40,15 +76,11 @@ export default function NavbarFull({ type }) {
     });
   };
 
-  let handleLogout = () => {
-    openNotificationWithIcon("success", "Goodbye " + userInfor.name);
-    dispatch(setUserLogin(null));
-    localStorageService.removeUserInfo();
-    setTimeout(() => {
-      navigate("/login");
-    }, 1500);
-  };
+  let locationInfo = useSelector((state) => state.searchSlice.locationInfo);
+  // console.log("locationInfo", locationInfo);
 
+  //search debounce
+  const [search, setSearch] = useState([]);
   const debounce = (func) => {
     let timer;
     return function (...args) {
@@ -67,26 +99,18 @@ export default function NavbarFull({ type }) {
     locationService
       .getLocation(value)
       .then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         setSearch(res.data);
         setIsLocation(!isLocation);
       })
       .catch((err) => {
-        console.log("err", err);
+        // console.log("err", err);
       });
   };
 
   const optimisedVersion = useCallback(debounce(handleOnChange), []);
 
-  const [date, setDate] = useState([
-    {
-      startDate: new Date(),
-      endDate: null,
-      key: "selection",
-    },
-  ]);
-
-  const ref = useRef();
+  //turn off all popup search result
   useOnClickOutside(
     ref,
     () => setIsLocation(false),
@@ -94,6 +118,20 @@ export default function NavbarFull({ type }) {
     () => setIsCheckOut(false),
     () => setIsGuest(false)
   );
+
+  //set location result to input value
+  useEffect(() => {
+    locationRef.current.value = location;
+  }, [location]);
+
+  let handleLogout = () => {
+    openNotificationWithIcon("success", "Goodbye " + userInfor.name);
+    dispatch(setUserLogin(null));
+    localStorageService.removeUserInfo();
+    setTimeout(() => {
+      navigate("/login");
+    }, 1500);
+  };
 
   return (
     <div
@@ -229,6 +267,7 @@ export default function NavbarFull({ type }) {
                   Location
                 </span>
                 <input
+                  ref={locationRef}
                   type="text"
                   placeholder="Try 'Hạ Long'"
                   className="w-full text-sm text-gray-500 placeholder-gray-300 truncate bg-transparent outline-none"
@@ -261,6 +300,7 @@ export default function NavbarFull({ type }) {
                           key={i}
                           onClick={() => {
                             setLocation(item.name);
+                            dispatch(setSearchLocation(item._id));
                           }}
                         >
                           <span>
@@ -343,7 +383,9 @@ export default function NavbarFull({ type }) {
                 <div className=" w-max h-max flex flex-col my-3 pl-3 pr-2 py-5 bg-white border border-gray-200 rounded-3xl hover:shadow-xl shadow-md ">
                   <span className="py-1 px-2 my-2 cursor-pointer">
                     <DateRange
-                      onChange={(item) => setDate([item.selection])}
+                      onChange={(item) => {
+                        return setDate([item.selection]);
+                      }}
                       moveRangeOnFirstSelection={false}
                       months={2}
                       ranges={date}
@@ -357,19 +399,19 @@ export default function NavbarFull({ type }) {
             </span>
             <span
               role="button"
-              className={`h-full relative flex justify-between  rounded-full
+              className={`h-full relative flex justify-between rounded-full
                 ${
                   isGuest
                     ? " shadow-around"
                     : "hover:bg-gray-200 hover:bg-opacity-40"
                 }`}
             >
-              <div className="flex items-start">
+              <div className="w-full flex flex-row items-center justify-between">
                 <div className="flex flex-col px-7 text-left py-5 cursor-pointer">
                   <span className="text-xs font-bold tracking-wider text-gray-500">
                     Guests
                   </span>
-                  <input
+                  {/* <input
                     type="text"
                     placeholder="Add guests"
                     className="w-full text-sm text-gray-500 placeholder-gray-300 truncate bg-transparent outline-none"
@@ -379,12 +421,24 @@ export default function NavbarFull({ type }) {
                       setIsCheckIn(false);
                       setIsLocation(false);
                     }}
-                  />
+                  /> */}
+                  <span
+                    className="w-full text-sm text-gray-500 placeholder-gray-300 truncate bg-transparent outline-none"
+                    onClick={() => {
+                      setIsGuest(!isGuest);
+                      setIsCheckOut(false);
+                      setIsCheckIn(false);
+                      setIsLocation(false);
+                    }}
+                  >
+                    {`${option.adult} adult - ${option.children} children - ${option.pet} pet`}
+                  </span>
                 </div>
-                <div className="p-2">
+                <div className=" p-2">
                   <button
-                    type="submit"
-                    className="searchButton w-5 h-5 border p-7 flex items-center justify-center rounded-full bg-primary hover:saturate-200 text-white text-lg"
+                    /* type="submit" */
+                    className="searchButton border p-5 flex items-center justify-center rounded-full bg-primary hover:saturate-200 text-white text-lg"
+                    onClick={handleSearch}
                   >
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                   </button>
@@ -406,11 +460,28 @@ export default function NavbarFull({ type }) {
                       </span>
                     </div>
                     <div className="optionAction flex items-center ">
-                      <button className="text-lg py-1 px-[11px] mx-3 rounded-full border border-gray-200 hover:border-gray-500 text-gray-700">
+                      <button
+                        className={`text-lg py-1 px-[11px] mx-3 rounded-full border border-gray-200 text-gray-700 ${
+                          option.adult <= 1
+                            ? "hover:border-gray-200 cursor-not-allowed"
+                            : "hover:border-gray-500"
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleOption("adult", "d");
+                        }}
+                        disabled={option.adult <= 1}
+                      >
                         <FontAwesomeIcon icon={faMinus} />
                       </button>
-                      <span>1</span>
-                      <button className="text-lg py-1 px-[11px] mx-3 rounded-full border border-gray-200 hover:border-gray-500 text-gray-700">
+                      <span>{option.adult}</span>
+                      <button
+                        className="text-lg py-1 px-[11px] mx-3 rounded-full border border-gray-200 hover:border-gray-500 text-gray-700"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleOption("adult", "i");
+                        }}
+                      >
                         <FontAwesomeIcon icon={faPlus} />
                       </button>
                     </div>
@@ -425,11 +496,28 @@ export default function NavbarFull({ type }) {
                       </span>
                     </div>
                     <div className="optionAction flex items-center ">
-                      <button className="text-lg py-1 px-[11px] mx-3 rounded-full border border-gray-200 hover:border-gray-500 text-gray-700">
+                      <button
+                        className={`text-lg py-1 px-[11px] mx-3 rounded-full border border-gray-200 text-gray-700 ${
+                          option.children <= 0
+                            ? "hover:border-gray-200 cursor-not-allowed"
+                            : "hover:border-gray-500"
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleOption("children", "d");
+                        }}
+                        disabled={option.children <= 0}
+                      >
                         <FontAwesomeIcon icon={faMinus} />
                       </button>
-                      <span>1</span>
-                      <button className="text-lg py-1 px-[11px] mx-3 rounded-full border border-gray-200 hover:border-gray-500 text-gray-700">
+                      <span>{option.children}</span>
+                      <button
+                        className="text-lg py-1 px-[11px] mx-3 rounded-full border border-gray-200 hover:border-gray-500 text-gray-700"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleOption("children", "i");
+                        }}
+                      >
                         <FontAwesomeIcon icon={faPlus} />
                       </button>
                     </div>
@@ -444,11 +532,28 @@ export default function NavbarFull({ type }) {
                       </span>
                     </div>
                     <div className="optionAction flex items-center ">
-                      <button className="text-lg py-1 px-[11px] mx-3 rounded-full border border-gray-200 hover:border-gray-500 text-gray-700">
+                      <button
+                        className={`text-lg py-1 px-[11px] mx-3 rounded-full border border-gray-200 text-gray-700 ${
+                          option.pet <= 0
+                            ? "hover:border-gray-200 cursor-not-allowed"
+                            : "hover:border-gray-500"
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleOption("pet", "d");
+                        }}
+                        disabled={option.pet <= 0}
+                      >
                         <FontAwesomeIcon icon={faMinus} />
                       </button>
-                      <span>1</span>
-                      <button className="text-lg py-1 px-[11px] mx-3 rounded-full border border-gray-200 hover:border-gray-500 text-gray-700">
+                      <span>{option.pet}</span>
+                      <button
+                        className="text-lg py-1 px-[11px] mx-3 rounded-full border border-gray-200 hover:border-gray-500 text-gray-700"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleOption("pet", "i");
+                        }}
+                      >
                         <FontAwesomeIcon icon={faPlus} />
                       </button>
                     </div>
