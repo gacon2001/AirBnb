@@ -15,7 +15,7 @@ export const mainRoutes = [
   { path: "/login", element: <LoginPage /> },
   { path: "/register", element: <RegistrationPage /> },
   {
-    path: "/listhotel",
+    path: "/listhotel/:id",
     element: <LayoutTheme Element={RoomListPage} />,
     isUseLayOut: true,
   },

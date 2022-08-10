@@ -8,7 +8,6 @@ import {
   faMagnifyingGlass,
   faMinus,
   faPlus,
-  faWarning,
 } from "@fortawesome/free-solid-svg-icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useOnClickOutside from "../../HOOK/use-onclick-outside";
@@ -50,7 +49,6 @@ export default function NavbarFull({ type }) {
     children: 0,
     pet: 0,
   });
-  console.log("option", option);
 
   const handleOption = (name, operation) => {
     setOption((option) => {
@@ -61,10 +59,13 @@ export default function NavbarFull({ type }) {
     });
   };
 
+  let locationInfo = useSelector((state) => state.searchSlice.locationInfo);
+  // console.log("locationInfo", locationInfo);
+
   const handleSearch = () => {
     dispatch(setSearchDateInfo(date[0]));
     dispatch(setSearchOption(option));
-    navigate("/listhotel");
+    navigate(`/listhotel/${locationInfo}`, { state: { locationInfo } });
   };
 
   //render user avatar
@@ -75,9 +76,6 @@ export default function NavbarFull({ type }) {
       description: description,
     });
   };
-
-  let locationInfo = useSelector((state) => state.searchSlice.locationInfo);
-  // console.log("locationInfo", locationInfo);
 
   //search debounce
   const [search, setSearch] = useState([]);
@@ -248,10 +246,9 @@ export default function NavbarFull({ type }) {
 
       <div className={`bottom`}>
         <div className="w-full max-w-4xl mx-auto mt-5 rounded-full bg-white shadow-md border border-gray-200 relative z-50">
-          <form
+          <div
             ref={ref}
-            action=""
-            className="grid grid-cols-[0.8fr,1.2fr,0.7fr,auto] w-full"
+            className="form grid grid-cols-[0.8fr,1.2fr,0.7fr,auto] w-full"
           >
             <span
               role="button"
@@ -561,7 +558,7 @@ export default function NavbarFull({ type }) {
                 </div>
               </div>
             </span>
-          </form>
+          </div>
         </div>
       </div>
     </div>

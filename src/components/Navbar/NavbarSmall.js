@@ -10,11 +10,32 @@ import { useSelector, useDispatch } from "react-redux";
 import { Avatar, Badge, notification } from "antd";
 import { localStorageService } from "./../../services/localStorageService";
 import { setUserLogin } from "../../redux/slices/userSlice";
+import { format } from "date-fns";
+import { useEffect, useState } from "react";
+import { locationService } from "./../../services/locationService";
 
 export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
   let userInfor = useSelector((state) => state.userSlice.userInfo);
+  let locationInfo = useSelector((state) => state.searchSlice.locationInfo);
+  const [locationName, setLocationName] = useState("");
+  let dateInfo = useSelector((state) => state.searchSlice.dateInfo);
+  let option = useSelector((state) => state.searchSlice.option);
+
   let dispatch = useDispatch();
   let navigate = useNavigate();
+
+  useEffect(() => {
+    locationService
+      .getRoomList(locationInfo)
+      .then((res) => {
+        // console.log("res", res);
+        setLocationName(res.data[0].locationId.name);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }, [locationInfo]);
+
   const openNotificationWithIcon = (type, message, description) => {
     notification[type]({
       message: message,
@@ -35,7 +56,7 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
     <div
       className={`navbar py-5 ${type !== "home" ? "bg-white shadow-md" : ""} `}
     >
-      <div className="top grid grid-cols-[1.0fr,1.4fr,0.7fr,auto] w-[1120px] mx-auto ">
+      <div className="top grid grid-cols-[0.4fr,2.0fr,1.0fr,auto] w-[1120px] mx-auto ">
         <Link to="/">
           <div
             className={`flex items-center h-12 ${
@@ -57,20 +78,25 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
           </div>
         </Link>
 
-        <div className="searchChoise flex items-center h-12 mt-1">
+        <div className="searchChoise ">
           <button
-            className="false pl-3 relative flex items-center h-12 pr-1 mx-auto text-left transform bg-white border border-gray-200 rounded-full shadow-md cursor-pointer min-w-[320px] hover:shadow-lg md:absolute left-24 lg:left-auto lg:right-1/2 lg:translate-x-1/2 duration-200"
+            className="false pl-3 relative flex items-center h-12 pr-1 mx-auto text-left transform bg-white border border-gray-200 rounded-full shadow-md cursor-pointer min-w-[320px] hover:shadow-lg  duration-200"
             onClick={() => {
               setIsNavChoose(!isNavChoose);
             }}
           >
-            <span className="flex-grow text-sm font-medium tracking-wide text-gray-500">
-              <span className="px-4 py-1 border-r border-gay-200">london</span>
+            <span className=" text-sm font-medium tracking-wide text-gray-500">
+              <span className="px-4 py-1 border-r border-gay-200 w-5  truncate">
+                {locationName}
+              </span>
               <span className="px-4 py-1 border-r border-gay-200">
-                <span className="font-normal text-gray-300">Add dates</span>
+                <span className="font-normal ">{`${format(
+                  dateInfo.startDate,
+                  "dd/MM"
+                )} - ${format(dateInfo.endDate, "dd/MM")}`}</span>
               </span>
               <span className="px-4 py-1">
-                <span className="font-normal text-gray-300">Add guests</span>
+                <span className="font-normal ">{`${option.adult} adult - ${option.children} children - ${option.pet} pet`}</span>
               </span>
             </span>
             <FontAwesomeIcon

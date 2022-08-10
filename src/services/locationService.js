@@ -11,4 +11,13 @@ export const locationService = {
       },
     });
   },
+  getRoomList: (locationInfo) => {
+    return axios({
+      method: "GET",
+      url: `${BASE_URL}/api/rooms?locationId=${locationInfo}`,
+      headers: {
+        tokenByClass: TOKEN_CYBERSOFT,
+      },
+    });
+  },
 };
