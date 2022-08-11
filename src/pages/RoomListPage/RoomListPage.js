@@ -1,13 +1,13 @@
 import "./roomListPage.scss";
 import RoomList from "./../../components/RoomList/RoomList";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { locationService } from "../../services/locationService";
 import { useSelector } from "react-redux";
 
 export default function RoomListPage() {
-  let param = useParams();
-  console.log("param", param.id);
+  // let param = useParams();
+  // console.log("param", param.id);
 
   const locationInfo = useSelector((state) => state.searchSlice.locationInfo);
 

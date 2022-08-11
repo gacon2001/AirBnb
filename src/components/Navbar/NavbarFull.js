@@ -66,7 +66,7 @@ export default function NavbarFull({ type }) {
   const handleSearch = () => {
     let dateStringify = JSON.stringify(date);
     let dateParse = JSON.parse(dateStringify);
-    console.log("dateParse", dateParse);
+    // console.log("dateParse", dateParse);
     dispatch(setSearchDateInfo(dateParse));
     dispatch(setSearchOption(option));
     localStorageService.setLocationInfo(locationInfo);

@@ -66,19 +66,11 @@ export default function RoomUtil({ render }) {
             <span>{dataIcon[9].name}</span>
           </div>
         )}
-        {/* {dataIcon.map((item, i) => {
-          return (
-            <div className="flex w-1/2 flex-row items-center py-3" key={i}>
-              <span className="mr-3">{item.file}</span>
-              <span>{item.name}</span>
-            </div>
-          );
-        })} */}
       </div>
       <div className="mt-4 pb-3">
         <button>
           <span className="py-3 px-9 bg-white font-semibold text-sm rounded-md border border-gray-800 ">
-            Show all 29 amentities
+            Show all amentities
           </span>
         </button>
       </div>

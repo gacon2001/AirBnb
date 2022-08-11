@@ -37,4 +37,13 @@ export const locationService = {
       },
     });
   },
+  getRoomReview: (roomId) => {
+    return axios({
+      method: "GET",
+      url: `${BASE_URL}/api/reviews/byRoom?roomId=${roomId}`,
+      headers: {
+        tokenByClass: TOKEN_CYBERSOFT,
+      },
+    });
+  },
 };

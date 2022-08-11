@@ -10,16 +10,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Progress } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import GalleryImg from "../../components/GalleryImg/GalleryImg";
 import Loading from "../../components/Loading/Loading";
 import RoomUtil from "../../components/RoomUtil/RoomUtil";
 import "./roomDetail.scss";
 import { locationService } from "./../../services/locationService";
+import { differenceInCalendarDays, format } from "date-fns";
 
 export default function RoomDetailPage() {
   let param = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [roomItem, setRoomItem] = useState({});
+  const [reviewList, setReviewList] = useState([]);
+  let dateInfo = useSelector((state) => state.searchSlice.dateInfo);
+  let option = useSelector((state) => state.searchSlice.option);
+
+  let bookingDeal = {
+    roomId: param.id,
+    checkIn: dateInfo[0].startDate,
+    checkOut: dateInfo[0].endDate,
+  };
+  console.log("bookingDeal", bookingDeal);
 
   let roomUtil = {
     kitchen: roomItem.kitchen,
@@ -34,7 +46,7 @@ export default function RoomDetailPage() {
     indoorFireplace: roomItem.indoorFireplace,
   };
 
-  console.log("roomUtil", roomUtil);
+  // console.log("roomUtil", roomUtil);
 
   useEffect(() => {
     locationService
@@ -42,6 +54,15 @@ export default function RoomDetailPage() {
       .then((res) => {
         console.log("res", res);
         setRoomItem(res.data);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+    locationService
+      .getRoomReview(param.id)
+      .then((res) => {
+        console.log("res", res);
+        setReviewList(res.data);
       })
       .catch((err) => {
         console.log("err", err);
@@ -263,18 +284,24 @@ export default function RoomDetailPage() {
                         <div className="date flex ">
                           <div className="checkIn w-1/2 pl-6 py-4  border-r border-gray-900">
                             <h4 className="text-sm font-bold pb-2">CHECK IN</h4>
-                            <span>29/7/2022</span>
+                            <span>{`${format(
+                              new Date(dateInfo[0].startDate),
+                              "dd/MM/yyyy"
+                            )}`}</span>
                           </div>
                           <div className="checkOut w-1/2 pl-6 py-4 ">
                             <h4 className="text-sm font-bold pb-2">
                               CHECK OUT
                             </h4>
-                            <span>12/8/2022</span>
+                            <span>{`${format(
+                              new Date(dateInfo[0].endDate),
+                              "dd/MM/yyyy"
+                            )}`}</span>
                           </div>
                         </div>
                         <div className="guest pl-6 py-4 border-t border-gray-900">
                           <h4 className="text-sm font-bold pb-2">GUESTS</h4>
-                          <span>2 guests</span>
+                          <span>{`${option.adult} adult - ${option.children} children - ${option.pet} pet`}</span>
                         </div>
                       </div>
                       <div className="buttonReserve py-4">
@@ -290,27 +317,41 @@ export default function RoomDetailPage() {
                       <div className="py-4 border-b">
                         <div className="flex justify-between text-lg pb-3">
                           <span className="underline">
-                            <span>$34 </span> x <span> 4 </span>{" "}
+                            <span>{`VND ${roomItem.price}`} </span> x{" "}
+                            <span>
+                              {" "}
+                              {differenceInCalendarDays(
+                                new Date(dateInfo[0].endDate),
+                                new Date(dateInfo[0].startDate)
+                              )}{" "}
+                            </span>{" "}
                             <span>nights</span>
                           </span>
                           <span>
-                            $ <span>136</span>
+                            VND{" "}
+                            <span>{`${
+                              roomItem.price *
+                              differenceInCalendarDays(
+                                new Date(dateInfo[0].endDate),
+                                new Date(dateInfo[0].startDate)
+                              )
+                            }`}</span>
                           </span>
                         </div>
-                        <div className="flex justify-between text-lg pb-3">
+                        {/* <div className="flex justify-between text-lg pb-3">
                           <span className="underline">
                             <span>Cleaning fee</span>
                           </span>
                           <span>
                             $ <span>15</span>
                           </span>
-                        </div>
+                        </div> */}
                         <div className="flex justify-between text-lg pb-3">
                           <span className="underline">
                             <span>Service fee</span>
                           </span>
                           <span>
-                            $ <span>23</span>
+                            VND <span>500000</span>
                           </span>
                         </div>
                       </div>
@@ -319,7 +360,15 @@ export default function RoomDetailPage() {
                           <span>Total before taxs</span>
                         </span>
                         <span>
-                          $ <span>174</span>
+                          VND{" "}
+                          <span>{`${
+                            roomItem.price *
+                              differenceInCalendarDays(
+                                new Date(dateInfo[0].endDate),
+                                new Date(dateInfo[0].startDate)
+                              ) +
+                            500000
+                          }`}</span>
                         </span>
                       </div>
                     </div>
@@ -441,134 +490,56 @@ export default function RoomDetailPage() {
                   </div>
                 </div>
               </div>
-              <div className="bottom flex flex-col flex-wrap h-[600px]">
-                <div className="w-1/2 h-40 pr-14 my-5">
-                  <div className="reviewTop flex flex-row items-center mb-5">
-                    <div className="avatar w-16 h-16 object-cover object-center rounded-full overflow-hidden mr-4">
-                      <img src="https://i.pravatar.cc/150?img=47" alt="" />
-                    </div>
-                    <div className="reviewer text-left">
-                      <h3 className="text-lg font-semibold">My Nuong</h3>
-                      <span className="font-light text-gray-700">
-                        Tháng 7 năm 2020
-                      </span>
-                    </div>
-                  </div>
-                  <div className="reviewBottom h-16 text-ellipsis overflow-hidden whitespace-normal ">
-                    <span>
-                      Managing Hanoi apartments for rent in the largest urban
-                      area in Vietnam Vinhomes Ocean Park, Sora-Inn Apartments
-                      near Lotte building and Embassy of Japan, Bella resort
-                      beside Ba Vi nation park, Vinhomes Green Bay, The garden
-                      The Manor,Sora-Inn Apartments near Lotte building and
-                      Embassy of Japan, Bella resort beside Ba Vi nation park,
-                      Vinhomes Green Bay, The garden The Manor,..
-                    </span>
-                  </div>
+              {reviewList.length ? (
+                <div className="bottom flex flex-col flex-wrap h-[600px]">
+                  {reviewList.map((item, i) => {
+                    if (i < 6) {
+                      return (
+                        <div className="w-1/2 h-40 pr-14 my-5" key={i}>
+                          <div className="reviewTop flex flex-row items-center mb-5">
+                            <div className="avatar w-16 h-16 object-cover object-center rounded-full overflow-hidden mr-4">
+                              <img
+                                src={item.userId.avatar}
+                                className="w-full h-full"
+                                alt=""
+                              />
+                            </div>
+                            <div className="reviewer text-left">
+                              <h3 className="text-lg font-semibold">
+                                {item.userId.name}
+                              </h3>
+                              <span className="font-light text-gray-700">
+                                {`Month ${format(
+                                  new Date(item.created_at),
+                                  "M"
+                                )} year ${format(
+                                  new Date(item.created_at),
+                                  "yyyy"
+                                )}`}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="reviewBottom h-16 text-ellipsis overflow-hidden whitespace-normal ">
+                            <span>{item.content}</span>
+                          </div>
+                        </div>
+                      );
+                    }
+                  })}
                 </div>
-                <div className="w-1/2 h-40 pr-14 my-5">
-                  <div className="reviewTop flex flex-row items-center mb-5">
-                    <div className="avatar w-16 h-16 object-cover object-center rounded-full overflow-hidden mr-4">
-                      <img src="https://i.pravatar.cc/150?img=45" alt="" />
-                    </div>
-                    <div className="reviewer text-left">
-                      <h3 className="text-lg font-semibold">My Nuong</h3>
-                      <span className="font-light text-gray-700">
-                        Tháng 7 năm 2020
-                      </span>
-                    </div>
-                  </div>
-                  <div className="reviewBottom h-16 text-ellipsis overflow-hidden whitespace-normal ">
-                    <span>
-                      Managing Hanoi apartments for rent in the largest urban
-                      area in Vietnam Vinhomes Ocean Park, Sora-Inn Apartments
-                      near Lotte building and Embassy of Japan, Bella resort
-                      beside Ba Vi nation park, Vinhomes Green Bay, The garden
-                      The Manor,Sora-Inn Apartments near Lotte building and
-                      Embassy of Japan, Bella resort beside Ba Vi nation park,
-                      Vinhomes Green Bay, The garden The Manor,..
-                    </span>
-                  </div>
-                </div>
-                <div className="w-1/2 h-40 pr-14 my-5">
-                  <div className="reviewTop flex flex-row items-center mb-5">
-                    <div className="avatar w-16 h-16 object-cover object-center rounded-full overflow-hidden mr-4">
-                      <img src="https://i.pravatar.cc/150?img=32" alt="" />
-                    </div>
-                    <div className="reviewer text-left">
-                      <h3 className="text-lg font-semibold">My Nuong</h3>
-                      <span className="font-light text-gray-700">
-                        Tháng 7 năm 2020
-                      </span>
-                    </div>
-                  </div>
-                  <div className="reviewBottom h-16 text-ellipsis overflow-hidden whitespace-normal ">
-                    <span>
-                      Managing Hanoi apartments for rent in the largest urban
-                      area in Vietnam Vinhomes Ocean Park, Sora-Inn Apartments
-                      near Lotte building and Embassy of Japan, Bella resort
-                      beside Ba Vi nation park, Vinhomes Green Bay, The garden
-                      The Manor,Sora-Inn Apartments near Lotte building and
-                      Embassy of Japan, Bella resort beside Ba Vi nation park,
-                      Vinhomes Green Bay, The garden The Manor,..
-                    </span>
-                  </div>
-                </div>
-                <div className="w-1/2 h-40 pr-14 my-5">
-                  <div className="reviewTop flex flex-row items-center mb-5">
-                    <div className="avatar w-16 h-16 object-cover object-center rounded-full overflow-hidden mr-4">
-                      <img src="https://i.pravatar.cc/150?img=42" alt="" />
-                    </div>
-                    <div className="reviewer text-left">
-                      <h3 className="text-lg font-semibold">My Nuong</h3>
-                      <span className="font-light text-gray-700">
-                        Tháng 7 năm 2020
-                      </span>
-                    </div>
-                  </div>
-                  <div className="reviewBottom h-16 text-ellipsis overflow-hidden whitespace-normal ">
-                    <span>
-                      Managing Hanoi apartments for rent in the largest urban
-                      area in Vietnam Vinhomes Ocean Park, Sora-Inn Apartments
-                      near Lotte building and Embassy of Japan, Bella resort
-                      beside Ba Vi nation park, Vinhomes Green Bay, The garden
-                      The Manor,Sora-Inn Apartments near Lotte building and
-                      Embassy of Japan, Bella resort beside Ba Vi nation park,
-                      Vinhomes Green Bay, The garden The Manor,..
-                    </span>
-                  </div>
-                </div>
-                <div className="w-1/2 h-40 pr-14 my-5">
-                  <div className="reviewTop flex flex-row items-center mb-5">
-                    <div className="avatar w-16 h-16 object-cover object-center rounded-full overflow-hidden mr-4">
-                      <img src="https://i.pravatar.cc/150?img=26" alt="" />
-                    </div>
-                    <div className="reviewer text-left">
-                      <h3 className="text-lg font-semibold">My Nuong</h3>
-                      <span className="font-light text-gray-700">
-                        Tháng 7 năm 2020
-                      </span>
-                    </div>
-                  </div>
-                  <div className="reviewBottom h-16 text-ellipsis overflow-hidden whitespace-normal ">
-                    <span>
-                      Managing Hanoi apartments for rent in the largest urban
-                      area in Vietnam Vinhomes Ocean Park, Sora-Inn Apartments
-                      near Lotte building and Embassy of Japan, Bella resort
-                      beside Ba Vi nation park, Vinhomes Green Bay, The garden
-                      The Manor,Sora-Inn Apartments near Lotte building and
-                      Embassy of Japan, Bella resort beside Ba Vi nation park,
-                      Vinhomes Green Bay, The garden The Manor,..
-                    </span>
-                  </div>
-                </div>
-              </div>
+              ) : (
+                ""
+              )}
               <div className="mt-4 pb-3">
-                <button>
-                  <span className="py-3 px-9 bg-white font-semibold text-sm rounded-md border border-gray-800 ">
-                    Show all 18 reivew
-                  </span>
-                </button>
+                {reviewList.length ? (
+                  <button>
+                    <span className="py-3 px-9 bg-white font-semibold text-sm rounded-md border border-gray-800 ">
+                      Show all reivew
+                    </span>
+                  </button>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

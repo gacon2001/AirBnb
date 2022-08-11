@@ -19,7 +19,6 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
   let locationInfo = useSelector((state) => state.searchSlice.locationInfo);
   const [locationName, setLocationName] = useState("");
   let dateInfo = useSelector((state) => state.searchSlice.dateInfo);
-  // console.log("dateInfo", new Date(dateInfo[0].startDate));
   let option = useSelector((state) => state.searchSlice.option);
 
   let dispatch = useDispatch();
