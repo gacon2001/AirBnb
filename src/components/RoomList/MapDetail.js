@@ -4,20 +4,20 @@ import { useEffect, useState } from "react";
 import Map, { Marker } from "react-map-gl";
 import { ACCESS_POSITION_STACK, MAP_ACCESS } from "../../services/configURL";
 import { dataMaps } from "./dataMap";
-import { locationService } from "./../../services/locationService";
+// import { locationService } from "./../../services/locationService";
 
 export default function MapDetail({ province }) {
   const [selected, setSelected] = useState([]);
   const [longitude, setLongitude] = useState(null);
   const [latitude, setLatitude] = useState(null);
-  console.log("longitude", longitude, latitude);
+  // console.log("longitude", longitude, latitude);
 
   const handleChoose = (i) => {
     setSelected((state) => {
       return state.includes(i) ? state.filter((n) => n !== i) : [...state, i];
     });
   };
-  const params = {
+  /*  const params = {
     access_key: ACCESS_POSITION_STACK,
     query: province,
   };
@@ -33,7 +33,7 @@ export default function MapDetail({ province }) {
       .catch((err) => {
         console.log("err", err);
       });
-  }, []);
+  }, []); */
 
   return (
     <div>

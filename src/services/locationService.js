@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ACCESS_POSITION_STACK, BASE_URL, TOKEN_CYBERSOFT } from "./configURL";
+import { BASE_URL, TOKEN_CYBERSOFT } from "./configURL";
 
 /* const params = {
   access_key: ACCESS_POSITION_STACK,
@@ -27,5 +27,14 @@ export const locationService = {
   },
   getLocationLongLat: (params) => {
     return axios.get(`http://api.positionstack.com/v1/forward`, { params });
+  },
+  getRoomDetail: (roomId) => {
+    return axios({
+      method: "GET",
+      url: `${BASE_URL}/api/rooms/${roomId}`,
+      headers: {
+        tokenByClass: TOKEN_CYBERSOFT,
+      },
+    });
   },
 };

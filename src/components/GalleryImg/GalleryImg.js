@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import Fancybox from "./../../HOOK/Fancybox";
 
-export default function GalleryImg() {
+export default function GalleryImg({ pic }) {
   return (
     <div className="relative w-full h-full">
       <div className="grid grid-rows-2 gap-2 grid-cols-4 rounded-lg overflow-hidden w-full h-full">
@@ -12,8 +12,8 @@ export default function GalleryImg() {
           <div className="col-span-2 row-span-2 w-full h-full hover:bg-black hover:opacity-90 duration-200 cursor-pointer">
             <img
               data-fancybox="gallery"
-              src="https://a0.muscache.com/im/pictures/648ad018-1484-4b2c-80ab-922675f9dce3.jpg?im_w=1200"
-              data-src="https://a0.muscache.com/im/pictures/648ad018-1484-4b2c-80ab-922675f9dce3.jpg?im_w=1200"
+              src={pic}
+              data-src={pic}
               alt=""
               className="w-full h-full object-cover object-center"
             />

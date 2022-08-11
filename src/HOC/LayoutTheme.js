@@ -9,11 +9,12 @@ import Loading from "../components/Loading/Loading";
 export default function LayoutTheme({ Element }) {
   const [isNavChoose, setIsNavChoose] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(true);
     }, 2000);
-  }, [isLoading]);
+  }, []);
 
   const ref = useRef();
   useOnClickOutside(ref, () => setIsNavChoose(false));

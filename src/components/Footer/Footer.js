@@ -103,7 +103,8 @@ export default function Footer() {
           <div className="left">
             <span>© 2022 Airbnb, Inc</span>
             <span className="mx-3">
-              | Clone by <b style={{ color: "#ff385c" }}>Hai Truong Thanh</b> |
+              | Clone by <b style={{ color: "#ff385c" }}>Hai Truong Thanh 🦝</b>{" "}
+              |
             </span>
             <span className="hover:underline cursor-pointer">• Privacy</span>
             <span className="hover:underline cursor-pointer mx-3">• Terms</span>
@@ -116,11 +117,9 @@ export default function Footer() {
             <span className="ml-2 mr-5 cursor-pointer hover:underline">
               English
             </span>
-            <span>
-              <FontAwesomeIcon icon={faDollarSign} />
-            </span>
+            <span>{/* <FontAwesomeIcon icon={faDollarSign} /> */}₫</span>
             <span className="ml-2 mr-5 cursor-pointer hover:underline">
-              US Dollar
+              Vietnam đồng
             </span>
             <span className="inline-block p-2 ml-3 mr-2 rounded-full border border-gray-200 hover:border-gray-500 text-gray-700 cursor-pointer">
               <svg
