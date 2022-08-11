@@ -1,15 +1,15 @@
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import {
   faAngleRight,
-  faDollarSign,
+  // faDollarSign,
   faFlag,
   faShare,
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Progress } from "antd";
+import { Progress, Modal } from "antd";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import GalleryImg from "../../components/GalleryImg/GalleryImg";
 import Loading from "../../components/Loading/Loading";
@@ -20,6 +20,7 @@ import { differenceInCalendarDays, format } from "date-fns";
 
 export default function RoomDetailPage() {
   let param = useParams();
+  let navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [roomItem, setRoomItem] = useState({});
   const [reviewList, setReviewList] = useState([]);
@@ -31,7 +32,7 @@ export default function RoomDetailPage() {
     checkIn: dateInfo[0].startDate,
     checkOut: dateInfo[0].endDate,
   };
-  console.log("bookingDeal", bookingDeal);
+  // console.log("bookingDeal", bookingDeal);
 
   let roomUtil = {
     kitchen: roomItem.kitchen,
@@ -52,7 +53,7 @@ export default function RoomDetailPage() {
     locationService
       .getRoomDetail(param.id)
       .then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         setRoomItem(res.data);
       })
       .catch((err) => {
@@ -61,7 +62,7 @@ export default function RoomDetailPage() {
     locationService
       .getRoomReview(param.id)
       .then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         setReviewList(res.data);
       })
       .catch((err) => {
@@ -71,6 +72,26 @@ export default function RoomDetailPage() {
       setIsLoading(true);
     }, 1500);
   }, [param.id]);
+
+  const countDown = () => {
+    let secondsToGo = 1.5;
+
+    const modal = Modal.success({
+      centered: true,
+      title: "Payment success",
+    });
+
+    setTimeout(() => {
+      modal.destroy();
+    }, secondsToGo * 1000);
+  };
+
+  const handleBooking = () => {
+    // setIsLoading(false);
+    setTimeout(() => {
+      navigate("/");
+    }, 1500);
+  };
 
   return (
     <>
@@ -84,7 +105,8 @@ export default function RoomDetailPage() {
               </h2>
               <div className="flex flex-row justify-between pt-2">
                 <span className="underline cursor-pointer font-semibold text-sm">
-                  {roomItem.locationId.province} - {roomItem.locationId.country}
+                  {roomItem.locationId.name} - {roomItem.locationId.province} -{" "}
+                  {roomItem.locationId.country}
                 </span>
                 <span>
                   <span className="mx-2 rounded hover:bg-gray-200 hover:opacity-75 cursor-pointer p-2 hover:underline">
@@ -305,7 +327,14 @@ export default function RoomDetailPage() {
                         </div>
                       </div>
                       <div className="buttonReserve py-4">
-                        <button className="w-full py-5 bg-orange-400 rounded-xl text-xl font-bold text-white tracking-wider">
+                        <button
+                          className="w-full py-5 bg-orange-400 rounded-xl text-xl font-bold text-white tracking-wider"
+                          onClick={() => {
+                            handleBooking();
+                            // success();
+                            countDown();
+                          }}
+                        >
                           Reserve
                         </button>
                       </div>

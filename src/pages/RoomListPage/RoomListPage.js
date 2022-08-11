@@ -4,10 +4,10 @@ import RoomList from "./../../components/RoomList/RoomList";
 import { useEffect, useState } from "react";
 import { locationService } from "../../services/locationService";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 export default function RoomListPage() {
-  // let param = useParams();
-  // console.log("param", param.id);
+  let param = useParams();
 
   const locationInfo = useSelector((state) => state.searchSlice.locationInfo);
 
@@ -18,7 +18,7 @@ export default function RoomListPage() {
 
   useEffect(() => {
     locationService
-      .getRoomList(locationInfo)
+      .getRoomList(param.id)
       .then((res) => {
         setListHotel(res.data);
         setNameOfPlace(res.data[0].locationId.name);
@@ -27,7 +27,7 @@ export default function RoomListPage() {
       .catch((err) => {
         console.log("err", err);
       });
-  }, [locationInfo]);
+  }, [param.id]);
 
   return (
     <>

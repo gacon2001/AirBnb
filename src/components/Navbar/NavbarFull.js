@@ -174,9 +174,10 @@ export default function NavbarFull({ type }) {
             </span>
             <span className="after:bg-gray-700 inline-block after:w-0 relative px-4 my-3 pb-2 cursor-pointer after:absolute after:bottom-0 after:right-1/2 after:translate-x-1/2 after:h-[2px] after:rounded-full hover:after:w-24">
               Experiences
+              <Link to="/experiences">Experiences</Link>
             </span>
             <span className="after:bg-gray-700 inline-block after:w-0 relative px-4 my-3 pb-2 cursor-pointer after:absolute after:bottom-0 after:right-1/2 after:translate-x-1/2 after:h-[2px] after:rounded-full hover:after:w-32">
-              Online Experiences
+              <Link to="/online_experiences">Online Experiences</Link>
             </span>
           </div>
         </div>
@@ -184,7 +185,7 @@ export default function NavbarFull({ type }) {
         <div className="userNavbar">
           <div className="flex items-center justify-end">
             <span className=" bg-gray-100 flex items-center h-10 px-6 rounded-full font-semibold tracking-wide text-sm cursor-pointer truncate">
-              Become a host
+              <Link to="/become-host">Become a host</Link>
             </span>
             <span className="text-gray-200 hover:bg-gray-500 hover:bg-opacity-10 flex items-center h-10 px-2 mr-1 rounded-full cursor-pointer">
               <svg

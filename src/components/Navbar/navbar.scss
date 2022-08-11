@@ -8,6 +8,10 @@
     }
 
     .searchChoise {
+      a:hover {
+        color: inherit;
+      }
+
       .fontColorFull {
         color: var(--font-color-1);
       }
@@ -29,6 +33,9 @@
     }
 
     .userNavbar {
+      a:hover {
+        color: var(--font-color-1);
+      }
       .profile {
         .loginOption {
           display: none;

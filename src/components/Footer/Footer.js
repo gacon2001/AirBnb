@@ -1,8 +1,42 @@
 import { faDollarSign, faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
+  let support = [
+    { item: "Help Center" },
+    { item: "AirCover" },
+    { item: "Safety information" },
+    { item: "Supporting people with disabilities" },
+    { item: "Cancellation options" },
+    { item: "Our COVID-19 Response" },
+    { item: "Report a neighborhood concern" },
+  ];
+
+  let community = [
+    { item: "Airbnb.org: disaster relief housing" },
+    { item: "Support Afghan refugees" },
+    { item: "Combating discrimination" },
+  ];
+
+  let hosting = [
+    { item: "Try hosting" },
+    { item: "AirCover for Hosts" },
+    { item: "Explore hosting resources" },
+    { item: "Visit our community forum" },
+    { item: "How to host responsibly" },
+  ];
+
+  let airbnb = [
+    { item: "Newsroom" },
+    { item: "Learn about new features" },
+    { item: "Letter from our founders" },
+    { item: "Careers" },
+    { item: "Investors" },
+    { item: "Gift cards" },
+  ];
+
   return (
     <div className="bg-gray-100 border-t border-gray-200">
       <div className="w-[1120px] mx-auto">
@@ -12,27 +46,15 @@ export default function Footer() {
               Support
             </span>
             <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-y-3 xl:gap-y-4">
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Help Center
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                AirCover
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Safety information
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Supporting people with disabilities
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Cancellation options
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Our COVID-19 Response
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Report a neighborhood concern
-              </li>
+              {support.map((item, i) => {
+                return (
+                  <Link to="/support" key={i}>
+                    <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
+                      {item.item}
+                    </li>
+                  </Link>
+                );
+              })}
             </ul>
           </div>
           <div className="py-6 md:py-8">
@@ -40,15 +62,15 @@ export default function Footer() {
               Community
             </span>
             <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-y-3 xl:gap-y-4">
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Airbnb.org: disaster relief housing
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Support Afghan refugees
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Combating discrimination
-              </li>
+              {community.map((item, i) => {
+                return (
+                  <Link to="/community" key={i}>
+                    <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
+                      {item.item}
+                    </li>
+                  </Link>
+                );
+              })}
             </ul>
           </div>
           <div className="py-6 md:py-8">
@@ -56,21 +78,15 @@ export default function Footer() {
               Hosting
             </span>
             <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-y-3 xl:gap-y-4">
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Try hosting
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                AirCover for Hosts
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Explore hosting resources
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Visit our community forum
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                How to host responsibly
-              </li>
+              {hosting.map((item, i) => {
+                return (
+                  <Link to="/hosting" key={i}>
+                    <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
+                      {item.item}
+                    </li>
+                  </Link>
+                );
+              })}
             </ul>
           </div>
           <div className="py-6 md:py-8">
@@ -78,24 +94,15 @@ export default function Footer() {
               Airbnb
             </span>
             <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-y-3 xl:gap-y-4">
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Newsroom
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Learn about new features
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Letter from our founders
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Careers
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Investors
-              </li>
-              <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                Gift cards
-              </li>
+              {airbnb.map((item, i) => {
+                return (
+                  <Link to="/airbnb" key={i}>
+                    <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
+                      {item.item}
+                    </li>
+                  </Link>
+                );
+              })}
             </ul>
           </div>
         </div>

@@ -1,7 +1,11 @@
 import React from "react";
 import { dataNearby } from "./dataNearby";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSearchLocation } from "../../redux/slices/searchSlice";
 
 export default function Nearby() {
+  let dispatch = useDispatch();
   return (
     <div className="nearby ">
       <div className="w-[1120px] mx-auto my-10 text-left">
@@ -11,8 +15,13 @@ export default function Nearby() {
         <div className="grid grid-cols-2 lg:gap-x-4 gap-x-1 gap-y-2 sm:grid-cols-3 lg:grid-cols-4">
           {dataNearby.map((item, i) => {
             return (
-              <a href="/" key={i}>
-                <div className="flex-col items-start md:items-center flex  p-2 duration-300 md:flex-row md:p-3 gap-x-4 active:scale-105 active:bg-gray-200 active:bg-opacity-40 rounded-xl hover:scale-105">
+              <Link to={`/listhotel/${item._id}`} key={i}>
+                <div
+                  className="flex-col items-start md:items-center flex  p-2 duration-300 md:flex-row md:p-3 gap-x-4 active:scale-105 active:bg-gray-200 active:bg-opacity-40 rounded-xl hover:scale-105"
+                  onClick={() => {
+                    dispatch(setSearchLocation(item._id));
+                  }}
+                >
                   <div className="w-16 h-16 rounded-md overflow-hidden">
                     <img src={item.src} alt="" />
                   </div>
@@ -25,7 +34,7 @@ export default function Nearby() {
                     </span>
                   </div>
                 </div>
-              </a>
+              </Link>
             );
           })}
         </div>
