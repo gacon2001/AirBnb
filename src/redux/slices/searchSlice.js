@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { localStorageService } from "./../../services/localStorageService";
 let initialState = {
-  locationInfo: "",
-  dateInfo: {},
-  option: {},
+  locationInfo: localStorageService.getLocationInfo(),
+  dateInfo: localStorageService.getDateInfo(),
+  option: localStorageService.getOptionInfo(),
 };
 
 const searchSlice = createSlice({

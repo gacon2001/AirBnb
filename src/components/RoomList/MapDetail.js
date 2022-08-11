@@ -26,7 +26,7 @@ export default function MapDetail({ province }) {
     locationService
       .getLocationLongLat(params)
       .then((res) => {
-        console.log("res", res.data);
+        // console.log("res", res.data);
         setLongitude(res.data.data[0].longitude);
         setLatitude(res.data.data[0].latitude);
       })

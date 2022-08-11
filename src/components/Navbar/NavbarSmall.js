@@ -19,6 +19,7 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
   let locationInfo = useSelector((state) => state.searchSlice.locationInfo);
   const [locationName, setLocationName] = useState("");
   let dateInfo = useSelector((state) => state.searchSlice.dateInfo);
+  // console.log("dateInfo", new Date(dateInfo[0].startDate));
   let option = useSelector((state) => state.searchSlice.option);
 
   let dispatch = useDispatch();
@@ -90,10 +91,12 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
                 {locationName}
               </span>
               <span className="px-4 py-1 border-r border-gay-200">
-                <span className="font-normal ">{`${format(
-                  dateInfo.startDate,
-                  "dd/MM"
-                )} - ${format(dateInfo.endDate, "dd/MM")}`}</span>
+                <span className="font-normal ">
+                  {`${format(
+                    new Date(dateInfo[0].startDate),
+                    "dd/MM"
+                  )} - ${format(new Date(dateInfo[0].endDate), "dd/MM")}`}
+                </span>
               </span>
               <span className="px-4 py-1">
                 <span className="font-normal ">{`${option.adult} adult - ${option.children} children - ${option.pet} pet`}</span>

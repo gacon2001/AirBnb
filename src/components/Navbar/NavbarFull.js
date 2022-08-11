@@ -60,11 +60,18 @@ export default function NavbarFull({ type }) {
   };
 
   let locationInfo = useSelector((state) => state.searchSlice.locationInfo);
+
   // console.log("locationInfo", locationInfo);
 
   const handleSearch = () => {
-    dispatch(setSearchDateInfo(date[0]));
+    let dateStringify = JSON.stringify(date);
+    let dateParse = JSON.parse(dateStringify);
+    console.log("dateParse", dateParse);
+    dispatch(setSearchDateInfo(dateParse));
     dispatch(setSearchOption(option));
+    localStorageService.setLocationInfo(locationInfo);
+    localStorageService.setDateInfo(date);
+    localStorageService.setOptionInfo(option);
     navigate(`/listhotel/${locationInfo}`, { state: { locationInfo } });
   };
 
