@@ -12,4 +12,14 @@ export const userService = {
       },
     });
   },
+  postRegister: (dataUser) => {
+    return axios({
+      method: "POST",
+      url: `${BASE_URL}/api/auth/register`,
+      data: dataUser,
+      headers: {
+        tokenByClass: TOKEN_CYBERSOFT,
+      },
+    });
+  },
 };

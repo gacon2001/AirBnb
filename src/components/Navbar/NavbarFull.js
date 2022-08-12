@@ -206,11 +206,18 @@ export default function NavbarFull({ type }) {
             </span>
             <div className="profile relative">
               <div className="userLoginIcon flex items-center justify-between pl-3 pr-2 py-1 bg-white border border-gray-200 rounded-full h-max hover:shadow-md cursor-pointer w-24 ">
-                <span className="h-8 text-2xl ml-2 text-gray-400 ">
+                <span className="h-8 text-2xl ml-2 text-gray-700 ">
                   <FontAwesomeIcon icon={faBars} className="" />
                 </span>
-                <span className="h-10 text-4xl text-gray-400">
-                  {!userInfor && <FontAwesomeIcon icon={faCircleUser} />}
+                <span className="h-10 text-4xl text-gray-700">
+                  {!userInfor && (
+                    <Badge dot>
+                      <FontAwesomeIcon
+                        icon={faCircleUser}
+                        className="text-4xl text-gray-700"
+                      />
+                    </Badge>
+                  )}
                   {userInfor && (
                     <Badge dot>
                       <Avatar

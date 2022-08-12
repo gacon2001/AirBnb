@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import { dataNearby } from "./dataNearby";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSearchLocation } from "../../redux/slices/searchSlice";
 
-export default function Nearby() {
+function Nearby() {
   let dispatch = useDispatch();
   return (
     <div className="nearby ">
@@ -45,3 +45,4 @@ export default function Nearby() {
     </div>
   );
 }
+export default memo(Nearby);

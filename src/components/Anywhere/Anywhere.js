@@ -1,8 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import { dataAnywhere } from "./dataAnyWhere";
 import { Link } from "react-router-dom";
 
-export default function Anywhere() {
+function Anywhere() {
   return (
     <div className="anyWhere ">
       <div className="w-[1120px] mx-auto my-14 text-left">
@@ -37,3 +37,5 @@ export default function Anywhere() {
     </div>
   );
 }
+
+export default memo(Anywhere);

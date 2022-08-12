@@ -1,14 +1,45 @@
-import { Link } from "react-router-dom";
-import { Button, Form, Input, Select, DatePicker } from "antd";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Button, Form, Input, Select, DatePicker, notification } from "antd";
 import React from "react";
 import "./registration.scss";
 import bgImg from "../../assets/registration/bg-5.jpg";
 import Map from "react-map-gl";
+import { userService } from "./../../services/userService";
 const { Option } = Select;
 
 const RegistrationPage = () => {
+  let navigate = useNavigate();
+  const openNotificationWithIcon = (type, message, description) => {
+    notification[type]({
+      message: message,
+      description: description,
+    });
+  };
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    const valuesDate = {
+      ...values,
+      birthday: values["birthday"].format("YYYY/MM/DD"),
+    };
+    console.log("Success:", valuesDate);
+    userService
+      .postRegister(valuesDate)
+      .then((res) => {
+        console.log("res", res);
+        openNotificationWithIcon(
+          "success",
+          "Register success",
+          "Welcome " + valuesDate.name
+        );
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
+      })
+      .catch((err) => {
+        console.log("err", err);
+        openNotificationWithIcon("error", "Please try again");
+      });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -94,7 +125,7 @@ const RegistrationPage = () => {
             >
               <div className="py-12 grid grid-cols-2 grid-flow-row gap-3">
                 <Form.Item
-                  name="username"
+                  name="name"
                   rules={[
                     {
                       required: true,
@@ -103,7 +134,7 @@ const RegistrationPage = () => {
                   ]}
                 >
                   <Input
-                    placeholder="Username"
+                    placeholder="First name and Last name"
                     className="px-4 py-1 rounded-md border "
                   />
                 </Form.Item>
@@ -172,10 +203,6 @@ const RegistrationPage = () => {
                   name="phone"
                   rules={[
                     {
-                      type: "number",
-                      message: "The input is not valid Phone number!",
-                    },
-                    {
                       required: true,
                       message: "Please input your phone number!",
                     },
@@ -199,14 +226,17 @@ const RegistrationPage = () => {
                       },
                     ]}
                   >
-                    <Select placeholder="Select your gender" className="">
-                      <Option value="male">Male</Option>
-                      <Option value="female">Female</Option>
-                      <Option value="other">Other</Option>
+                    <Select
+                      placeholder="Select your gender"
+                      className=""
+                      type={Boolean}
+                    >
+                      <Option value={true}>Male</Option>
+                      <Option value={false}>Female</Option>
                     </Select>
                   </Form.Item>
                   <Form.Item
-                    name="dateOfBirth"
+                    name="birthday"
                     rules={[
                       {
                         required: true,
@@ -214,9 +244,26 @@ const RegistrationPage = () => {
                       },
                     ]}
                   >
-                    <DatePicker placeholder="Date of Birth" />
+                    <DatePicker
+                      placeholder="Date of Birth"
+                      format="YYYY/MM/DD"
+                    />
                   </Form.Item>
                 </div>
+                <Form.Item
+                  name="address"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your address!",
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder="Your address"
+                    className="px-4 py-1 rounded-md border "
+                  />
+                </Form.Item>
               </div>
               <Form.Item>
                 <Button
