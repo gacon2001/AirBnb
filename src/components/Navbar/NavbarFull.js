@@ -59,9 +59,8 @@ export default function NavbarFull({ type }) {
     });
   };
 
+  //Search button and navigate to list page
   let locationInfo = useSelector((state) => state.searchSlice.locationInfo);
-
-  // console.log("locationInfo", locationInfo);
 
   const handleSearch = () => {
     let dateStringify = JSON.stringify(date);
@@ -72,7 +71,7 @@ export default function NavbarFull({ type }) {
     localStorageService.setLocationInfo(locationInfo);
     localStorageService.setDateInfo(date);
     localStorageService.setOptionInfo(option);
-    navigate(`/listhotel/${locationInfo}`, { state: { locationInfo } });
+    navigate(`/listhotel/${locationInfo}/106.7/10.77`);
   };
 
   //render user avatar

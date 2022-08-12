@@ -15,7 +15,10 @@ export default function Nearby() {
         <div className="grid grid-cols-2 lg:gap-x-4 gap-x-1 gap-y-2 sm:grid-cols-3 lg:grid-cols-4">
           {dataNearby.map((item, i) => {
             return (
-              <Link to={`/listhotel/${item._id}`} key={i}>
+              <Link
+                to={`/listhotel/${item._id}/${item.long}/${item.lat}`}
+                key={i}
+              >
                 <div
                   className="flex-col items-start md:items-center flex  p-2 duration-300 md:flex-row md:p-3 gap-x-4 active:scale-105 active:bg-gray-200 active:bg-opacity-40 rounded-xl hover:scale-105"
                   onClick={() => {

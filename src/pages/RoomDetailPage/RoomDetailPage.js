@@ -27,11 +27,6 @@ export default function RoomDetailPage() {
   let dateInfo = useSelector((state) => state.searchSlice.dateInfo);
   let option = useSelector((state) => state.searchSlice.option);
 
-  let bookingDeal = {
-    roomId: param.id,
-    checkIn: dateInfo[0].startDate,
-    checkOut: dateInfo[0].endDate,
-  };
   // console.log("bookingDeal", bookingDeal);
 
   let roomUtil = {
@@ -78,7 +73,7 @@ export default function RoomDetailPage() {
 
     const modal = Modal.success({
       centered: true,
-      title: "Payment success",
+      title: "Booking success",
     });
 
     setTimeout(() => {

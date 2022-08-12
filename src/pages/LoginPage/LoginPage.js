@@ -1,4 +1,4 @@
-import { Button, Form, Input, Checkbox, message, notification } from "antd";
+import { Button, Form, Input, Checkbox, notification } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import "./loginPage.scss";
@@ -31,7 +31,7 @@ const LoginPage = () => {
         dispatch(setUserLogin(res.data.user));
         openNotificationWithIcon(
           "success",
-          "Xin chào " + res.data.user.name,
+          "Welcome " + res.data.user.name,
           res.data.message
         );
         setIsLoadingOpen(false);
@@ -138,7 +138,8 @@ const LoginPage = () => {
                     rules={[
                       {
                         required: true,
-                        message: "Please input your E-mail!",
+                        message:
+                          "Please input your E-mail! try: kha9x0159@gmail.com",
                       },
                       {
                         type: "email",
@@ -148,7 +149,7 @@ const LoginPage = () => {
                   >
                     <Input
                       placeholder="Your email"
-                      className="p-4 rounded-md border "
+                      className="p-4 rounded-md border"
                     />
                   </Form.Item>
                   <Form.Item

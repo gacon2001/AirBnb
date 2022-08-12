@@ -2,12 +2,8 @@ import "./roomList.scss";
 import RoomListItem from "./RoomListItem";
 import SimpleBarReact from "simplebar-react";
 import MapDetail from "./MapDetail";
-import { removeVietnameseTones } from "../../services/convertService";
 
-export default function RoomList({ list, placeName, province }) {
-  let provinceConvert = removeVietnameseTones(province);
-  // console.log("provinceConvert", provinceConvert);
-
+export default function RoomList({ list, placeName, longitude, latitude }) {
   return (
     <div className="roomList flex">
       <div className="left w-1/2 h-screen p-6 ">
@@ -51,7 +47,7 @@ export default function RoomList({ list, placeName, province }) {
         </div>
       </div>
       <div className="right w-1/2 h-screen ">
-        <MapDetail province={provinceConvert} />
+        <MapDetail longitude={longitude} latitude={latitude} />
       </div>
     </div>
   );

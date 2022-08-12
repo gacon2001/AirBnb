@@ -3,18 +3,16 @@ import RoomList from "./../../components/RoomList/RoomList";
 // import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { locationService } from "../../services/locationService";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 export default function RoomListPage() {
   let param = useParams();
-
-  const locationInfo = useSelector((state) => state.searchSlice.locationInfo);
+  // console.log("param", param, param.long, param.lat);
 
   const [nameOfPlace, setNameOfPlace] = useState("");
-  const [province, setProvince] = useState("");
-
   const [listHotel, setListHotel] = useState([]);
+  const [longitude, setLongitude] = useState(param.long);
+  const [latitude, setLatitude] = useState(param.lat);
 
   useEffect(() => {
     locationService
@@ -22,7 +20,6 @@ export default function RoomListPage() {
       .then((res) => {
         setListHotel(res.data);
         setNameOfPlace(res.data[0].locationId.name);
-        setProvince(res.data[0].locationId.province);
       })
       .catch((err) => {
         console.log("err", err);
@@ -35,7 +32,8 @@ export default function RoomListPage() {
         <RoomList
           list={listHotel}
           placeName={nameOfPlace}
-          province={province}
+          longitude={longitude}
+          latitude={latitude}
         />
       </main>
     </>
