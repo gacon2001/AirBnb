@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Form, Input, Select, DatePicker, notification } from "antd";
 import React from "react";
 import "./registration.scss";

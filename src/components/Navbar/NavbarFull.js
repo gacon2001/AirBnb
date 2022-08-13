@@ -132,6 +132,7 @@ export default function NavbarFull({ type }) {
     openNotificationWithIcon("success", "Goodbye " + userInfor.name);
     dispatch(setUserLogin(null));
     localStorageService.removeUserInfo();
+    localStorageService.removeUserToken();
     setTimeout(() => {
       navigate("/login");
     }, 1500);

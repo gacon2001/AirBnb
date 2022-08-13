@@ -1,11 +1,6 @@
 import axios from "axios";
 import { BASE_URL, TOKEN_CYBERSOFT } from "./configURL";
 
-/* const params = {
-  access_key: ACCESS_POSITION_STACK,
-  query: "1600 Pennsylvania Ave NW",
-}; */
-
 export const locationService = {
   getLocation: (dataLocation) => {
     return axios({
@@ -42,6 +37,17 @@ export const locationService = {
       method: "GET",
       url: `${BASE_URL}/api/reviews/byRoom?roomId=${roomId}`,
       headers: {
+        tokenByClass: TOKEN_CYBERSOFT,
+      },
+    });
+  },
+  postRoomBooking: (token, dataBooking) => {
+    return axios({
+      method: "POST",
+      url: `${BASE_URL}/api/rooms/booking`,
+      data: dataBooking,
+      headers: {
+        token: token,
         tokenByClass: TOKEN_CYBERSOFT,
       },
     });

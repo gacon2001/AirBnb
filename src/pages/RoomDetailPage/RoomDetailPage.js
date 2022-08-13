@@ -26,8 +26,16 @@ export default function RoomDetailPage() {
   const [reviewList, setReviewList] = useState([]);
   let dateInfo = useSelector((state) => state.searchSlice.dateInfo);
   let option = useSelector((state) => state.searchSlice.option);
+  let token = useSelector((state) => state.userSlice.userToken);
 
-  // console.log("bookingDeal", bookingDeal);
+  console.log("token", token);
+
+  let dataBooking = {
+    roomId: roomItem._id,
+    checkIn: dateInfo[0].startDate,
+    checkOut: dateInfo[0].endDate,
+  };
+  console.log("dataBooking", dataBooking);
 
   let roomUtil = {
     kitchen: roomItem.kitchen,
@@ -83,6 +91,15 @@ export default function RoomDetailPage() {
 
   const handleBooking = () => {
     // setIsLoading(false);
+    locationService
+      .postRoomBooking(token, dataBooking)
+      .then((res) => {
+        // console.log("res", res);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+    countDown();
     setTimeout(() => {
       navigate("/");
     }, 1500);
@@ -327,7 +344,6 @@ export default function RoomDetailPage() {
                           onClick={() => {
                             handleBooking();
                             // success();
-                            countDown();
                           }}
                         >
                           Reserve
@@ -523,14 +539,18 @@ export default function RoomDetailPage() {
                           <div className="reviewTop flex flex-row items-center mb-5">
                             <div className="avatar w-16 h-16 object-cover object-center rounded-full overflow-hidden mr-4">
                               <img
-                                src={item.userId.avatar}
+                                src={
+                                  item.userId
+                                    ? item.userId.avatar
+                                    : `https://i.pravatar.cc/150?u=${item._id}`
+                                }
                                 className="w-full h-full"
                                 alt=""
                               />
                             </div>
                             <div className="reviewer text-left">
                               <h3 className="text-lg font-semibold">
-                                {item.userId.name}
+                                {item.userId ? item.userId.name : "Random Name"}
                               </h3>
                               <span className="font-light text-gray-700">
                                 {`Month ${format(

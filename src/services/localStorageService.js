@@ -1,4 +1,5 @@
 let USER = "user_airbnbProject";
+let USER_TOKEN = "user_token_airbnbProject";
 let CHOICE_LOCATION = "choice_location_airbnbProject";
 let CHOICE_DATE = "choice_date_airbnbProject";
 let CHOICE_OPTION = "choice_option_airbnbProject";
@@ -17,6 +18,20 @@ export const localStorageService = {
   },
   removeUserInfo: () => {
     localStorage.removeItem(USER);
+  },
+  setUserToken: (token) => {
+    let dataJson = JSON.stringify(token);
+    localStorage.setItem(USER_TOKEN, dataJson);
+  },
+  getUserToken: () => {
+    let dataJson = localStorage.getItem(USER_TOKEN);
+    if (dataJson) {
+      return JSON.parse(dataJson);
+    }
+    return null;
+  },
+  removeUserToken: () => {
+    localStorage.removeItem(USER_TOKEN);
   },
   setLocationInfo: (location) => {
     let dataJson = JSON.stringify(location);

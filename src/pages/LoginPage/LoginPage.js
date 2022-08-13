@@ -6,7 +6,7 @@ import bgImg from "../../assets/login/bg-1.jpg";
 import { useDispatch } from "react-redux";
 import Map from "react-map-gl";
 import { userService } from "./../../services/userService";
-import { setUserLogin } from "../../redux/slices/userSlice";
+import { setUserLogin, setUserToken } from "../../redux/slices/userSlice";
 import { localStorageService } from "./../../services/localStorageService";
 import Loading from "./../../components/Loading/Loading";
 
@@ -27,8 +27,11 @@ const LoginPage = () => {
     userService
       .postLogin(values)
       .then((res) => {
+        console.log("res", res);
         localStorageService.setUserInfo(res.data.user);
+        localStorageService.setUserToken(res.data.token);
         dispatch(setUserLogin(res.data.user));
+        dispatch(setUserToken(res.data.token));
         openNotificationWithIcon(
           "success",
           "Welcome " + res.data.user.name,
