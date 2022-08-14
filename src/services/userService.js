@@ -22,4 +22,24 @@ export const userService = {
       },
     });
   },
+  postAvatar: (token, pic) => {
+    return axios({
+      method: "POST",
+      url: `${BASE_URL}/api/users/upload-avatar`,
+      data: pic,
+      headers: {
+        token: token,
+        tokenByClass: TOKEN_CYBERSOFT,
+      },
+    });
+  },
+  getUserInfo: (userId) => {
+    return axios({
+      method: "GET",
+      url: `${BASE_URL}/api/users/${userId}`,
+      headers: {
+        tokenByClass: TOKEN_CYBERSOFT,
+      },
+    });
+  },
 };

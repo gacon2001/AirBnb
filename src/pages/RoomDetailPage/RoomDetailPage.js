@@ -28,14 +28,14 @@ export default function RoomDetailPage() {
   let option = useSelector((state) => state.searchSlice.option);
   let token = useSelector((state) => state.userSlice.userToken);
 
-  console.log("token", token);
+  // console.log("token", token);
 
   let dataBooking = {
     roomId: roomItem._id,
     checkIn: dateInfo[0].startDate,
     checkOut: dateInfo[0].endDate,
   };
-  console.log("dataBooking", dataBooking);
+  // console.log("dataBooking", dataBooking);
 
   let roomUtil = {
     kitchen: roomItem.kitchen,

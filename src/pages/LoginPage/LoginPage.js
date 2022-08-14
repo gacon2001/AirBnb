@@ -6,15 +6,19 @@ import bgImg from "../../assets/login/bg-1.jpg";
 import { useDispatch } from "react-redux";
 import Map from "react-map-gl";
 import { userService } from "./../../services/userService";
-import { setUserLogin, setUserToken } from "../../redux/slices/userSlice";
+import {
+  setUserAvatar,
+  setUserLogin,
+  setUserToken,
+} from "../../redux/slices/userSlice";
 import { localStorageService } from "./../../services/localStorageService";
+import avatarPic from "../../assets/user/default-avatar-bpthumb.png";
 import Loading from "./../../components/Loading/Loading";
 
 const LoginPage = () => {
   let dispatch = useDispatch();
   let navigate = useNavigate();
   const [isLoadingOpen, setIsLoadingOpen] = useState(true);
-
   const openNotificationWithIcon = (type, message, description) => {
     notification[type]({
       message: message,
@@ -32,6 +36,14 @@ const LoginPage = () => {
         localStorageService.setUserToken(res.data.token);
         dispatch(setUserLogin(res.data.user));
         dispatch(setUserToken(res.data.token));
+        dispatch(
+          setUserAvatar(() => {
+            if (Object.keys(res.data.user).find((key) => key === "avatar")) {
+              return res.data.user.avatar;
+            }
+            return avatarPic;
+          })
+        );
         openNotificationWithIcon(
           "success",
           "Welcome " + res.data.user.name,

@@ -7,9 +7,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Avatar, Badge, notification } from "antd";
+import { Avatar, Badge, notification, Tooltip } from "antd";
 import { localStorageService } from "./../../services/localStorageService";
-import { setUserLogin } from "../../redux/slices/userSlice";
+import { setUserAvatar, setUserLogin } from "../../redux/slices/userSlice";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { locationService } from "./../../services/locationService";
@@ -46,6 +46,7 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
   let handleLogout = () => {
     openNotificationWithIcon("success", "Goodbye " + userInfor.name);
     dispatch(setUserLogin(null));
+    dispatch(setUserAvatar(false));
     localStorageService.removeUserInfo();
     setTimeout(() => {
       navigate("/login");
@@ -56,7 +57,13 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
     <div
       className={`navbar py-5 ${type !== "home" ? "bg-white shadow-md" : ""} `}
     >
-      <div className="top grid grid-cols-[0.4fr,2.0fr,1.0fr,auto] w-[1120px] mx-auto ">
+      <div
+        className={`top ${
+          type === "user"
+            ? "flex justify-between"
+            : "grid grid-cols-[0.4fr,2.0fr,1.0fr,auto]"
+        } w-[1120px] mx-auto `}
+      >
         <Link to="/">
           <div
             className={`flex items-center h-12 ${
@@ -78,7 +85,7 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
           </div>
         </Link>
 
-        <div className="searchChoise ">
+        <div className={`searchChoise ${type === "user" ? "hidden" : ""}`}>
           <button
             className="false pl-3 relative flex items-center h-12 pr-1 mx-auto text-left transform bg-white border border-gray-200 rounded-full shadow-md cursor-pointer min-w-[320px] hover:shadow-lg  duration-200"
             onClick={() => {
@@ -141,13 +148,15 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
                 <span className="h-10 text-4xl text-gray-400">
                   {!userInfor && <FontAwesomeIcon icon={faCircleUser} />}
                   {userInfor && (
-                    <Badge dot>
-                      <Avatar
-                        size={36}
-                        className="mb-4"
-                        src={userInfor.avatar}
-                      />
-                    </Badge>
+                    <Tooltip title={userInfor.name} placement="rightTop">
+                      <Badge dot>
+                        <Avatar
+                          size={36}
+                          className="mb-4"
+                          src={userInfor.avatar}
+                        />
+                      </Badge>
+                    </Tooltip>
                   )}
                 </span>
               </div>
@@ -166,7 +175,7 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
                 {userInfor && (
                   <div className="w-44 h-max flex flex-col mt-4 pl-3 pr-2 py-5 bg-white border border-gray-200 rounded-xl hover:shadow-xl shadow-md ">
                     <span className="py-2 my-2 font-semibold hover:bg-gray-200 hover:shadow-sm hover:rounded-xl cursor-pointer">
-                      <Link to="/person/:id">Personal Page</Link>
+                      <Link to={`/user/${userInfor._id}`}>Personal Page</Link>
                     </span>
                     <span
                       className="py-2 my-2 font-semibold hover:bg-gray-200 hover:shadow-sm hover:rounded-xl cursor-pointer"

@@ -14,7 +14,7 @@ import useOnClickOutside from "../../HOOK/use-onclick-outside";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import { useSelector, useDispatch } from "react-redux";
-import { Avatar, Badge, notification } from "antd";
+import { Avatar, Badge, notification, Tooltip } from "antd";
 import { localStorageService } from "./../../services/localStorageService";
 import { setUserLogin } from "../../redux/slices/userSlice";
 import { locationService } from "../../services/locationService";
@@ -173,7 +173,6 @@ export default function NavbarFull({ type }) {
               Place to stay
             </span>
             <span className="after:bg-gray-700 inline-block after:w-0 relative px-4 my-3 pb-2 cursor-pointer after:absolute after:bottom-0 after:right-1/2 after:translate-x-1/2 after:h-[2px] after:rounded-full hover:after:w-24">
-              Experiences
               <Link to="/experiences">Experiences</Link>
             </span>
             <span className="after:bg-gray-700 inline-block after:w-0 relative px-4 my-3 pb-2 cursor-pointer after:absolute after:bottom-0 after:right-1/2 after:translate-x-1/2 after:h-[2px] after:rounded-full hover:after:w-32">
@@ -220,13 +219,15 @@ export default function NavbarFull({ type }) {
                     </Badge>
                   )}
                   {userInfor && (
-                    <Badge dot>
-                      <Avatar
-                        size={36}
-                        className="mb-4"
-                        src={userInfor.avatar}
-                      />
-                    </Badge>
+                    <Tooltip title={userInfor.name} placement="right">
+                      <Badge dot>
+                        <Avatar
+                          size={36}
+                          className="mb-4"
+                          src={userInfor.avatar}
+                        />
+                      </Badge>
+                    </Tooltip>
                   )}
                 </span>
               </div>
@@ -245,7 +246,7 @@ export default function NavbarFull({ type }) {
                 {userInfor && (
                   <div className="w-44 h-max flex flex-col mt-4 pl-3 pr-2 py-5 bg-white border border-gray-200 rounded-xl hover:shadow-xl shadow-md ">
                     <span className="py-2 my-2 font-semibold hover:bg-gray-200 hover:shadow-sm hover:rounded-xl cursor-pointer">
-                      <Link to="/person/:id">Personal Page</Link>
+                      <Link to={`/user/${userInfor._id}`}>Personal Page</Link>
                     </span>
                     <span
                       className="py-2 my-2 font-semibold hover:bg-gray-200 hover:shadow-sm hover:rounded-xl cursor-pointer"

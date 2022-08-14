@@ -5,6 +5,7 @@ import RoomListPage from "../pages/RoomListPage/RoomListPage";
 import RoomDetailPage from "./../pages/RoomDetailPage/RoomDetailPage";
 import PageNotFound from "./../pages/404Page/PageNotFound";
 import LayoutTheme from "../HOC/LayoutTheme";
+import UserPage from "../pages/UserPage/UserPage";
 
 export const mainRoutes = [
   {
@@ -14,6 +15,7 @@ export const mainRoutes = [
   },
   { path: "/login", element: <LoginPage /> },
   { path: "/register", element: <RegistrationPage /> },
+  { path: "/user/:id", element: <UserPage /> },
   {
     path: "/listhotel/:id/:long/:lat",
     element: <LayoutTheme Element={RoomListPage} />,
