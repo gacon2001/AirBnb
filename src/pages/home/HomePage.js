@@ -10,7 +10,7 @@ export default function HomePage() {
       <header className="overflow-hidden">
         <Header />
       </header>
-      <main>
+      <main className="mx-auto">
         <Nearby />
         <Anywhere />
       </main>

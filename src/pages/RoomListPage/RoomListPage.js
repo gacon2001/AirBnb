@@ -7,7 +7,6 @@ import { useParams } from "react-router-dom";
 
 export default function RoomListPage() {
   let param = useParams();
-  // console.log("param", param, param.long, param.lat);
 
   const [nameOfPlace, setNameOfPlace] = useState("");
   const [listHotel, setListHotel] = useState([]);

@@ -1,0 +1,12 @@
+.user {
+  .userSmall {
+    &:hover {
+      .loginOption {
+        display: block;
+      }
+    }
+    .loginOption {
+      display: none;
+    }
+  }
+}

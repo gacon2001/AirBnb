@@ -1,130 +1,60 @@
-import { faDollarSign, faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
+import { footerList } from "./footerList";
 
 function Footer() {
-  let support = [
-    { item: "Help Center" },
-    { item: "AirCover" },
-    { item: "Safety information" },
-    { item: "Supporting people with disabilities" },
-    { item: "Cancellation options" },
-    { item: "Our COVID-19 Response" },
-    { item: "Report a neighborhood concern" },
-  ];
-
-  let community = [
-    { item: "Airbnb.org: disaster relief housing" },
-    { item: "Support Afghan refugees" },
-    { item: "Combating discrimination" },
-  ];
-
-  let hosting = [
-    { item: "Try hosting" },
-    { item: "AirCover for Hosts" },
-    { item: "Explore hosting resources" },
-    { item: "Visit our community forum" },
-    { item: "How to host responsibly" },
-  ];
-
-  let airbnb = [
-    { item: "Newsroom" },
-    { item: "Learn about new features" },
-    { item: "Letter from our founders" },
-    { item: "Careers" },
-    { item: "Investors" },
-    { item: "Gift cards" },
-  ];
-
   return (
     <div className="bg-gray-100 border-t border-gray-200">
-      <div className="w-[1120px] mx-auto">
-        <div className="top grid grid-cols-4 text-left truncate">
-          <div className="py-6 md:py-8">
-            <span className="inline-block mb-4 text-sm font-semibold">
-              Support
-            </span>
-            <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-y-3 xl:gap-y-4">
-              {support.map((item, i) => {
-                return (
-                  <Link to="/support" key={i}>
-                    <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                      {item.item}
-                    </li>
-                  </Link>
-                );
-              })}
-            </ul>
-          </div>
-          <div className="py-6 md:py-8">
-            <span className="inline-block mb-4 text-sm font-semibold">
-              Community
-            </span>
-            <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-y-3 xl:gap-y-4">
-              {community.map((item, i) => {
-                return (
-                  <Link to="/community" key={i}>
-                    <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                      {item.item}
-                    </li>
-                  </Link>
-                );
-              })}
-            </ul>
-          </div>
-          <div className="py-6 md:py-8">
-            <span className="inline-block mb-4 text-sm font-semibold">
-              Hosting
-            </span>
-            <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-y-3 xl:gap-y-4">
-              {hosting.map((item, i) => {
-                return (
-                  <Link to="/hosting" key={i}>
-                    <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                      {item.item}
-                    </li>
-                  </Link>
-                );
-              })}
-            </ul>
-          </div>
-          <div className="py-6 md:py-8">
-            <span className="inline-block mb-4 text-sm font-semibold">
-              Airbnb
-            </span>
-            <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-y-3 xl:gap-y-4">
-              {airbnb.map((item, i) => {
-                return (
-                  <Link to="/airbnb" key={i}>
-                    <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
-                      {item.item}
-                    </li>
-                  </Link>
-                );
-              })}
-            </ul>
-          </div>
+      <div className="xl:w-[1120px] container mx-auto px-4">
+        <div className="top grid grid-cols-1 lg:grid-cols-4 text-left truncate">
+          {footerList.map((list, i) => {
+            return (
+              <div className="py-6 md:py-8" key={i}>
+                <span className="inline-block mb-4 text-sm font-semibold">
+                  {list.name}
+                </span>
+                <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-y-3 xl:gap-y-4">
+                  {list.list.map((item, i) => {
+                    return (
+                      <Link to="/fakelink" key={i}>
+                        <li className="text-sm text-gray-500 hover:text-gray-400 hover:underline cursor-pointer">
+                          {item.item}
+                        </li>
+                      </Link>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          })}
         </div>
         <div className="bottom flex flex-col items-center justify-between py-5 text-sm text-gray-400 border-t border-gray-200 lg:py-6 lg:flex-row">
-          <div className="left">
-            <span>© 2022 Airbnb, Inc</span>
-            <span className="mx-3">
-              | Clone by <b style={{ color: "#ff385c" }}>Hai Truong Thanh 🦝</b>{" "}
-              |
-            </span>
-            <span className="hover:underline cursor-pointer">• Privacy</span>
-            <span className="hover:underline cursor-pointer mx-3">• Terms</span>
-            <span className="hover:underline cursor-pointer">• Sitemap</span>
+          <div className="left py-2 flex flex-col md:flex-row">
+            <div>
+              <span>© 2022 Airbnb, Inc</span>
+              <span className="mx-3">
+                | Clone by{" "}
+                <b style={{ color: "#ff385c" }}>Hai Truong Thanh 🦝</b> |
+              </span>
+            </div>
+            <div>
+              <span className="hover:underline cursor-pointer">• Privacy</span>
+              <span className="hover:underline cursor-pointer mx-3">
+                • Terms
+              </span>
+              <span className="hover:underline cursor-pointer">• Sitemap</span>
+            </div>
           </div>
-          <div className="right text-gray-800 flex items-center">
+          <div className="right text-gray-800 flex items-center py-2">
             <span>
               <FontAwesomeIcon icon={faGlobe} />
             </span>
             <span className="ml-2 mr-5 cursor-pointer hover:underline">
               English
             </span>
-            <span>{/* <FontAwesomeIcon icon={faDollarSign} /> */}₫</span>
+            <span>₫</span>
             <span className="ml-2 mr-5 cursor-pointer hover:underline">
               Vietnam đồng
             </span>

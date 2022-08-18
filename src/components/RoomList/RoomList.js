@@ -2,11 +2,13 @@ import "./roomList.scss";
 import RoomListItem from "./RoomListItem";
 import SimpleBarReact from "simplebar-react";
 import MapDetail from "./MapDetail";
+import useWindowDimensions from "../../HOOK/useWindowDimensions";
 
 export default function RoomList({ list, placeName, longitude, latitude }) {
+  const { height, width } = useWindowDimensions();
   return (
     <div className="roomList flex">
-      <div className="left w-1/2 h-screen p-6 ">
+      <div className={`left ${width > 1024 ? "w-2/3" : "w-full"} h-screen p-6`}>
         <div className="w-full h-full flex flex-col">
           <div className="roomTitle text-left pt-4 border-b">
             <span className="inline-block mb-2 text-sm text-gray-400">
@@ -46,9 +48,11 @@ export default function RoomList({ list, placeName, longitude, latitude }) {
           </div>
         </div>
       </div>
-      <div className="right w-1/2 h-screen ">
-        <MapDetail longitude={longitude} latitude={latitude} />
-      </div>
+      {width > 1024 && (
+        <div className="right w-1/3 h-screen ">
+          <MapDetail longitude={longitude} latitude={latitude} />
+        </div>
+      )}
     </div>
   );
 }

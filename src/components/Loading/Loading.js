@@ -4,7 +4,7 @@ import * as LottiePlayer from "@lottiefiles/lottie-player";
 export default function Loading() {
   return (
     <div className="w-screen h-screen relative bg-yellow-100 ">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-90 md:scale-100">
         <lottie-player
           autoplay
           loop

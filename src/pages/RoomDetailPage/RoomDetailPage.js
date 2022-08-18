@@ -7,7 +7,7 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Progress, Modal } from "antd";
+import { Progress, Modal, notification, Drawer } from "antd";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -17,18 +17,19 @@ import RoomUtil from "../../components/RoomUtil/RoomUtil";
 import "./roomDetail.scss";
 import { locationService } from "./../../services/locationService";
 import { differenceInCalendarDays, format } from "date-fns";
+import useWindowDimensions from "../../HOOK/useWindowDimensions";
 
 export default function RoomDetailPage() {
   let param = useParams();
   let navigate = useNavigate();
+  const { height, width } = useWindowDimensions();
   const [isLoading, setIsLoading] = useState(false);
   const [roomItem, setRoomItem] = useState({});
   const [reviewList, setReviewList] = useState([]);
+  const [visible, setVisible] = useState(false);
   let dateInfo = useSelector((state) => state.searchSlice.dateInfo);
   let option = useSelector((state) => state.searchSlice.option);
   let token = useSelector((state) => state.userSlice.userToken);
-
-  // console.log("token", token);
 
   let dataBooking = {
     roomId: roomItem._id,
@@ -50,8 +51,6 @@ export default function RoomDetailPage() {
     indoorFireplace: roomItem.indoorFireplace,
   };
 
-  // console.log("roomUtil", roomUtil);
-
   useEffect(() => {
     locationService
       .getRoomDetail(param.id)
@@ -71,9 +70,13 @@ export default function RoomDetailPage() {
       .catch((err) => {
         console.log("err", err);
       });
-    setTimeout(() => {
+    let timeId = setTimeout(() => {
       setIsLoading(true);
     }, 1500);
+
+    return () => {
+      clearTimeout(timeId);
+    };
   }, [param.id]);
 
   const countDown = () => {
@@ -89,20 +92,46 @@ export default function RoomDetailPage() {
     }, secondsToGo * 1000);
   };
 
+  const openNotificationWithIcon = (type, message, description) => {
+    notification[type]({
+      message: message,
+      description: description,
+    });
+  };
+
   const handleBooking = () => {
     // setIsLoading(false);
-    locationService
-      .postRoomBooking(token, dataBooking)
-      .then((res) => {
-        // console.log("res", res);
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
-    countDown();
-    setTimeout(() => {
-      navigate("/");
-    }, 1500);
+    if (token) {
+      locationService
+        .postRoomBooking(token, dataBooking)
+        .then((res) => {
+          // console.log("res", res);
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
+      countDown();
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+    } else {
+      openNotificationWithIcon(
+        "warning",
+        "Please login first",
+        "Go back to login page"
+      );
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+    }
+  };
+
+  const showDrawer = () => {
+    setVisible(true);
+  };
+
+  const onClose = () => {
+    setVisible(false);
   };
 
   return (
@@ -110,13 +139,13 @@ export default function RoomDetailPage() {
       {!isLoading && <Loading />}
       {isLoading && (
         <main>
-          <div className="w-[1120px] mx-auto">
+          <div className="xl:w-[1120px] container mx-auto px-3">
             <div className="pt-6">
-              <h2 className="text-2xl f ont-semibold text-left">
+              <h2 className="text-2xl font-semibold text-left">
                 {roomItem.name}
               </h2>
               <div className="flex flex-row justify-between pt-2">
-                <span className="underline cursor-pointer font-semibold text-sm">
+                <span className="underline cursor-pointer font-semibold text-sm text-left">
                   {roomItem.locationId.name} - {roomItem.locationId.province} -{" "}
                   {roomItem.locationId.country}
                 </span>
@@ -132,11 +161,11 @@ export default function RoomDetailPage() {
                 </span>
               </div>
             </div>
-            <div className="gallery w-full pt-6 h-[600px] ">
+            <div className="gallery w-full pt-6 h-96 lg:h-[600px] ">
               <GalleryImg pic={roomItem.image} />
             </div>
-            <div className="roomDetail flex pt-14 border-b">
-              <div className="left w-3/5 pr-4">
+            <div className="roomDetail flex flex-col lg:flex-row pt-14 border-b">
+              <div className="left w-full lg:w-3/5 pr-4">
                 <div className="left1 flex flex-row justify-between items-center pb-6 border-b ">
                   <div className="text-left">
                     <h2 className="text-2xl font-semibold mb-2">
@@ -303,121 +332,259 @@ export default function RoomDetailPage() {
                   <RoomUtil render={roomUtil} />
                 </div>
               </div>
-              <div className="right w-2/5 h-[1190px] ml-[8.3%] relative">
-                <div className="sticky top-0 w-full pb-12">
-                  <div className="payment text-[#222222] text-base font-normal leading-5 text-left">
-                    <div className="border border-gray-900 rounded-xl shadow-2xl p-8">
-                      <h2 className="text-2xl font-semibold pt-2 pb-6">
-                        {/* <FontAwesomeIcon icon={faDollarSign} />  */}
-                        {`VND ${roomItem.price}`}
-                        <span className="text-lg font-light text-gray-700 ml-2">
-                          /night
-                        </span>
-                      </h2>
-                      <div className="border border-gray-900 rounded-xl">
-                        <div className="date flex ">
-                          <div className="checkIn w-1/2 pl-6 py-4  border-r border-gray-900">
-                            <h4 className="text-sm font-bold pb-2">CHECK IN</h4>
-                            <span>{`${format(
-                              new Date(dateInfo[0].startDate),
-                              "dd/MM/yyyy"
-                            )}`}</span>
-                          </div>
-                          <div className="checkOut w-1/2 pl-6 py-4 ">
-                            <h4 className="text-sm font-bold pb-2">
-                              CHECK OUT
-                            </h4>
-                            <span>{`${format(
-                              new Date(dateInfo[0].endDate),
-                              "dd/MM/yyyy"
-                            )}`}</span>
+              <div className="right w-full lg:w-2/5 lg:h-[1190px] lg:ml-[8.3%] relative">
+                {width < 1024 ? (
+                  <div className="border payment border-gray-900 rounded-xl shadow-2xl p-3 px-8">
+                    <div className="buttonReserve py-4">
+                      <button
+                        className="w-full py-5 rounded-xl text-xl font-bold text-white tracking-wider"
+                        onClick={() => {
+                          showDrawer();
+                        }}
+                      >
+                        Reserve
+                      </button>
+                    </div>
+                    <Drawer
+                      title="Payment confirm"
+                      placement="right"
+                      closable={false}
+                      onClose={onClose}
+                      visible={visible}
+                      width="450"
+                    >
+                      <div className="sticky top-0 w-full">
+                        <div className="payment text-[#222222] text-base font-normal leading-5 text-left">
+                          <div className="border border-gray-900 rounded-xl shadow-2xl p-8">
+                            <h2 className="text-2xl font-semibold pt-2 pb-6">
+                              {/* <FontAwesomeIcon icon={faDollarSign} />  */}
+                              {`VND ${roomItem.price}`}
+                              <span className="text-lg font-light text-gray-700 ml-2">
+                                /night
+                              </span>
+                            </h2>
+                            <div className="border border-gray-900 rounded-xl">
+                              <div className="date flex flex-col">
+                                <div className="checkIn w-full pl-6 py-4  border-b border-gray-900">
+                                  <h4 className="text-sm font-bold pb-2">
+                                    CHECK IN
+                                  </h4>
+                                  <span>{`${format(
+                                    new Date(dateInfo[0].startDate),
+                                    "dd/MM/yyyy"
+                                  )}`}</span>
+                                </div>
+                                <div className="checkOut w-full pl-6 py-4 ">
+                                  <h4 className="text-sm font-bold pb-2">
+                                    CHECK OUT
+                                  </h4>
+                                  <span>{`${format(
+                                    new Date(dateInfo[0].endDate),
+                                    "dd/MM/yyyy"
+                                  )}`}</span>
+                                </div>
+                              </div>
+                              <div className="guest pl-6 py-4 border-t border-gray-900">
+                                <h4 className="text-sm font-bold pb-2">
+                                  GUESTS
+                                </h4>
+                                <span>{`${option.adult} adult - ${option.children} children - ${option.pet} pet`}</span>
+                              </div>
+                            </div>
+                            <div className="buttonReserve py-4">
+                              <button
+                                className="w-full py-5 rounded-xl text-xl font-bold text-white tracking-wider bg-[#e31c5f]"
+                                onClick={() => {
+                                  handleBooking();
+                                }}
+                              >
+                                Reserve
+                              </button>
+                            </div>
+                            <div className=" text-center pb-2">
+                              <span className="text-base font-light">
+                                You won't be charged yet
+                              </span>
+                            </div>
+                            <div className="py-4 border-b">
+                              <div className="flex flex-col justify-between text-lg pb-3">
+                                <span className="underline">
+                                  <span>{`VND ${roomItem.price}`} </span> x{" "}
+                                  <span>
+                                    {" "}
+                                    {differenceInCalendarDays(
+                                      new Date(dateInfo[0].endDate),
+                                      new Date(dateInfo[0].startDate)
+                                    )}{" "}
+                                  </span>{" "}
+                                  <span>nights</span>
+                                </span>
+                                <span className="text-right font-semibold">
+                                  <FontAwesomeIcon
+                                    icon={faAngleRight}
+                                    className="mr-3"
+                                  />
+                                  VND{" "}
+                                  <span>{`${
+                                    roomItem.price *
+                                    differenceInCalendarDays(
+                                      new Date(dateInfo[0].endDate),
+                                      new Date(dateInfo[0].startDate)
+                                    )
+                                  }`}</span>
+                                </span>
+                              </div>
+                              <div className="flex flex-col justify-between text-lg pb-3">
+                                <span className="underline">
+                                  <span>Service fee</span>
+                                </span>
+                                <span className="text-right font-semibold">
+                                  <FontAwesomeIcon
+                                    icon={faAngleRight}
+                                    className="mr-3"
+                                  />
+                                  VND <span>500000</span>
+                                </span>
+                              </div>
+                            </div>
+                            <div className="flex flex-col justify-between text-lg pt-5">
+                              <span className="font-bold">
+                                <span>Total before taxs</span>
+                              </span>
+                              <span className="text-right font-bold">
+                                <FontAwesomeIcon
+                                  icon={faAngleRight}
+                                  className="mr-3"
+                                />
+                                VND{" "}
+                                <span>{`${
+                                  roomItem.price *
+                                    differenceInCalendarDays(
+                                      new Date(dateInfo[0].endDate),
+                                      new Date(dateInfo[0].startDate)
+                                    ) +
+                                  500000
+                                }`}</span>
+                              </span>
+                            </div>
                           </div>
                         </div>
-                        <div className="guest pl-6 py-4 border-t border-gray-900">
-                          <h4 className="text-sm font-bold pb-2">GUESTS</h4>
-                          <span>{`${option.adult} adult - ${option.children} children - ${option.pet} pet`}</span>
+                        <div className="note underline cursor-pointer font-semibold text-sm mt-8">
+                          <FontAwesomeIcon icon={faFlag} className="mr-5" />{" "}
+                          Report this listing
                         </div>
                       </div>
-                      <div className="buttonReserve py-4">
-                        <button
-                          className="w-full py-5 bg-orange-400 rounded-xl text-xl font-bold text-white tracking-wider"
-                          onClick={() => {
-                            handleBooking();
-                            // success();
-                          }}
-                        >
-                          Reserve
-                        </button>
-                      </div>
-                      <div className=" text-center pb-2">
-                        <span className="text-base font-light">
-                          You won't be charged yet
-                        </span>
-                      </div>
-                      <div className="py-4 border-b">
-                        <div className="flex justify-between text-lg pb-3">
-                          <span className="underline">
-                            <span>{`VND ${roomItem.price}`} </span> x{" "}
-                            <span>
-                              {" "}
-                              {differenceInCalendarDays(
+                    </Drawer>
+                  </div>
+                ) : (
+                  <div className="sticky top-0 w-full pb-12">
+                    <div className="payment text-[#222222] text-base font-normal leading-5 text-left">
+                      <div className="border border-gray-900 rounded-xl shadow-2xl p-8">
+                        <h2 className="text-2xl font-semibold pt-2 pb-6">
+                          {/* <FontAwesomeIcon icon={faDollarSign} />  */}
+                          {`VND ${roomItem.price}`}
+                          <span className="text-lg font-light text-gray-700 ml-2">
+                            /night
+                          </span>
+                        </h2>
+                        <div className="border border-gray-900 rounded-xl">
+                          <div className="date flex ">
+                            <div className="checkIn w-1/2 pl-6 py-4  border-r border-gray-900">
+                              <h4 className="text-sm font-bold pb-2">
+                                CHECK IN
+                              </h4>
+                              <span>{`${format(
+                                new Date(dateInfo[0].startDate),
+                                "dd/MM/yyyy"
+                              )}`}</span>
+                            </div>
+                            <div className="checkOut w-1/2 pl-6 py-4 ">
+                              <h4 className="text-sm font-bold pb-2">
+                                CHECK OUT
+                              </h4>
+                              <span>{`${format(
                                 new Date(dateInfo[0].endDate),
-                                new Date(dateInfo[0].startDate)
-                              )}{" "}
-                            </span>{" "}
-                            <span>nights</span>
+                                "dd/MM/yyyy"
+                              )}`}</span>
+                            </div>
+                          </div>
+                          <div className="guest pl-6 py-4 border-t border-gray-900">
+                            <h4 className="text-sm font-bold pb-2">GUESTS</h4>
+                            <span>{`${option.adult} adult - ${option.children} children - ${option.pet} pet`}</span>
+                          </div>
+                        </div>
+                        <div className="buttonReserve py-4">
+                          <button
+                            className="w-full py-5 rounded-xl text-xl font-bold text-white tracking-wider"
+                            onClick={() => {
+                              handleBooking();
+                            }}
+                          >
+                            Reserve
+                          </button>
+                        </div>
+                        <div className=" text-center pb-2">
+                          <span className="text-base font-light">
+                            You won't be charged yet
+                          </span>
+                        </div>
+                        <div className="py-4 border-b">
+                          <div className="flex justify-between text-lg pb-3">
+                            <span className="underline">
+                              <span>{`VND ${roomItem.price}`} </span> x{" "}
+                              <span>
+                                {" "}
+                                {differenceInCalendarDays(
+                                  new Date(dateInfo[0].endDate),
+                                  new Date(dateInfo[0].startDate)
+                                )}{" "}
+                              </span>{" "}
+                              <span>nights</span>
+                            </span>
+                            <span>
+                              VND{" "}
+                              <span>{`${
+                                roomItem.price *
+                                differenceInCalendarDays(
+                                  new Date(dateInfo[0].endDate),
+                                  new Date(dateInfo[0].startDate)
+                                )
+                              }`}</span>
+                            </span>
+                          </div>
+                          <div className="flex justify-between text-lg pb-3">
+                            <span className="underline">
+                              <span>Service fee</span>
+                            </span>
+                            <span>
+                              VND <span>500000</span>
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between text-lg pt-5">
+                          <span className="font-bold">
+                            <span>Total before taxs</span>
                           </span>
                           <span>
                             VND{" "}
                             <span>{`${
                               roomItem.price *
-                              differenceInCalendarDays(
-                                new Date(dateInfo[0].endDate),
-                                new Date(dateInfo[0].startDate)
-                              )
+                                differenceInCalendarDays(
+                                  new Date(dateInfo[0].endDate),
+                                  new Date(dateInfo[0].startDate)
+                                ) +
+                              500000
                             }`}</span>
                           </span>
                         </div>
-                        {/* <div className="flex justify-between text-lg pb-3">
-                          <span className="underline">
-                            <span>Cleaning fee</span>
-                          </span>
-                          <span>
-                            $ <span>15</span>
-                          </span>
-                        </div> */}
-                        <div className="flex justify-between text-lg pb-3">
-                          <span className="underline">
-                            <span>Service fee</span>
-                          </span>
-                          <span>
-                            VND <span>500000</span>
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex justify-between text-lg pt-5">
-                        <span className="font-bold">
-                          <span>Total before taxs</span>
-                        </span>
-                        <span>
-                          VND{" "}
-                          <span>{`${
-                            roomItem.price *
-                              differenceInCalendarDays(
-                                new Date(dateInfo[0].endDate),
-                                new Date(dateInfo[0].startDate)
-                              ) +
-                            500000
-                          }`}</span>
-                        </span>
                       </div>
                     </div>
+                    <div className="note underline cursor-pointer font-semibold text-sm mt-8">
+                      <FontAwesomeIcon icon={faFlag} className="mr-5" /> Report
+                      this listing
+                    </div>
                   </div>
-                  <div className="note underline cursor-pointer font-semibold text-sm mt-8">
-                    <FontAwesomeIcon icon={faFlag} className="mr-5" /> Report
-                    this listing
-                  </div>
-                </div>
+                )}
               </div>
             </div>
             <div className="comment w-full py-6 border-b text-left">
