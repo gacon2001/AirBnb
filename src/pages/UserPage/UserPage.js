@@ -53,8 +53,8 @@ export default function UserPage() {
   return (
     <>
       <NavbarSmall type="user" />
-      <div className="w-[1120px] mx-auto flex pt-14 ">
-        <div className="left w-80 h-max mr-[8.3%] relative">
+      <div className="lg:w-[1120px] container mx-auto flex flex-col md:flex-row pt-14 ">
+        <div className="left w-80 h-max mx-auto md:mr-[8.3%] relative">
           <div className="sticky top-0 w-full pb-12">
             <div className=" text-[#222222] text-base font-normal leading-5 text-left">
               <div className="border border-gray-500 rounded-xl shadow-2xl p-8">
@@ -146,7 +146,7 @@ export default function UserPage() {
             </div>
           </div>
         </div>
-        <div className="right w-3/5 pl-4">
+        <div className="right w-3/5 pl-4 mx-auto">
           <div className="left1 flex flex-row justify-between items-center pb-6 border-b ">
             <div className="text-left">
               <h2 className="text-2xl font-semibold mb-2">

@@ -18,6 +18,7 @@ import "./roomDetail.scss";
 import { locationService } from "./../../services/locationService";
 import { differenceInCalendarDays, format } from "date-fns";
 import useWindowDimensions from "../../HOOK/useWindowDimensions";
+import { useMemo } from "react";
 
 export default function RoomDetailPage() {
   let param = useParams();
@@ -31,14 +32,21 @@ export default function RoomDetailPage() {
   let option = useSelector((state) => state.searchSlice.option);
   let token = useSelector((state) => state.userSlice.userToken);
 
-  let dataBooking = {
+  /* let dataBooking = {
     roomId: roomItem._id,
     checkIn: dateInfo[0].startDate,
     checkOut: dateInfo[0].endDate,
-  };
+  }; */
   // console.log("dataBooking", dataBooking);
+  let dataBooking = useMemo(() => {
+    return {
+      roomId: roomItem._id,
+      checkIn: dateInfo[0].startDate,
+      checkOut: dateInfo[0].endDate,
+    };
+  }, [dateInfo, roomItem._id]);
 
-  let roomUtil = {
+  /* let roomUtil = {
     kitchen: roomItem.kitchen,
     pool: roomItem.pool,
     elevator: roomItem.elevator,
@@ -49,7 +57,22 @@ export default function RoomDetailPage() {
     dryer: roomItem.dryer,
     heating: roomItem.heating,
     indoorFireplace: roomItem.indoorFireplace,
-  };
+  }; */
+
+  let roomUtil = useMemo(() => {
+    return {
+      kitchen: roomItem.kitchen,
+      pool: roomItem.pool,
+      elevator: roomItem.elevator,
+      hotTub: roomItem.hotTub,
+      gym: roomItem.gym,
+      wifi: roomItem.wifi,
+      cableTV: roomItem.cableTV,
+      dryer: roomItem.dryer,
+      heating: roomItem.heating,
+      indoorFireplace: roomItem.indoorFireplace,
+    };
+  }, [roomItem]);
 
   useEffect(() => {
     locationService

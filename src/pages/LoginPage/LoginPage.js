@@ -32,7 +32,7 @@ const LoginPage = () => {
     userService
       .postLogin(values)
       .then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         localStorageService.setUserInfo(res.data.user);
         localStorageService.setUserToken(res.data.token);
         dispatch(setUserLogin(res.data.user));

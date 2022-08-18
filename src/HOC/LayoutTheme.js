@@ -24,7 +24,7 @@ export default function LayoutTheme({ Element }) {
   const [isNavChoose, setIsNavChoose] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { height, width } = useWindowDimensions();
-  console.log("width, height", width, height);
+  // console.log("width, height", width, height);
   let dispatch = useDispatch();
   let navigate = useNavigate();
   let userInfor = useSelector((state) => state.userSlice.userInfo);

@@ -26,7 +26,7 @@ const RegistrationPage = () => {
     userService
       .postRegister(valuesDate)
       .then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         openNotificationWithIcon(
           "success",
           "Register success",
