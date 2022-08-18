@@ -26,6 +26,7 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
   let locationInfo = useSelector((state) => state.searchSlice.locationInfo);
   const [locationName, setLocationName] = useState("");
   let dateInfo = useSelector((state) => state.searchSlice.dateInfo);
+  console.log("dateInfo", dateInfo);
   let option = useSelector((state) => state.searchSlice.option);
   const { height, width } = useWindowDimensions();
 

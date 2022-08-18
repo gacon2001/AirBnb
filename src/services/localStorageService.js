@@ -42,7 +42,7 @@ export const localStorageService = {
     if (dataJson) {
       return JSON.parse(dataJson);
     }
-    return null;
+    return "6276ad9ffee2fc001cdd4044";
   },
   setDateInfo: (date) => {
     let dataJson = JSON.stringify(date);
@@ -53,7 +53,13 @@ export const localStorageService = {
     if (dataJson) {
       return JSON.parse(dataJson);
     }
-    return null;
+    return [
+      {
+        startDate: new Date(),
+        endDate: null,
+        key: "selection",
+      },
+    ];
   },
   setOptionInfo: (option) => {
     let dataJson = JSON.stringify(option);
@@ -64,6 +70,10 @@ export const localStorageService = {
     if (dataJson) {
       return JSON.parse(dataJson);
     }
-    return null;
+    return {
+      adult: 1,
+      children: 0,
+      pet: 0,
+    };
   },
 };
