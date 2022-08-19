@@ -35,8 +35,8 @@ function Footer() {
             <div>
               <span>© 2022 Airbnb, Inc</span>
               <span className="mx-3">
-                | Clone by{" "}
-                <b style={{ color: "#ff385c" }}>Hai Truong Thanh 🦝</b> |
+                | Clone by <b style={{ color: "#ff385c" }}>Hai Truong Thanh</b>{" "}
+                |
               </span>
             </div>
             <div>
