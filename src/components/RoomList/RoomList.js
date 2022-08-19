@@ -50,8 +50,8 @@ export default function RoomList({ list, placeName, longitude, latitude }) {
         </div>
       </div>
       {width > 1024 && (
-        <div className="right w-1/3 h-screen ">
-          <div className="w-full h-full cursor-grab touch-none select-none outline-none">
+        <div className="right w-1/3 h-screen relative z-10">
+          <div className="w-full h-full">
             <MapDetail longitude={longitude} latitude={latitude} />
           </div>
         </div>

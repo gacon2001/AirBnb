@@ -148,10 +148,10 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
             </span>
             <div className="profile relative">
               <div className="userLoginIcon flex items-center justify-between pl-3 pr-2 py-1 bg-white border border-gray-200 rounded-full h-max hover:shadow-md cursor-pointer w-24 ">
-                <span className="h-8 text-2xl ml-2 text-gray-400 ">
+                <span className="h-8 text-2xl ml-2 text-gray-700 ">
                   <FontAwesomeIcon icon={faBars} className="" />
                 </span>
-                <span className="h-10 text-4xl text-gray-400">
+                <span className="h-10 text-4xl text-gray-700">
                   {!userInfor && <FontAwesomeIcon icon={faCircleUser} />}
                   {userInfor && (
                     <Tooltip title={userInfor.name} placement="rightTop">
@@ -167,7 +167,7 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
                 </span>
               </div>
 
-              <div className="loginOption absolute top-12 right-0 z-40">
+              <div className="loginOption absolute top-12 right-0 z-[999]">
                 {!userInfor && (
                   <div className="w-44 h-max flex flex-col mt-4 pl-3 pr-2 py-5 bg-white border border-gray-200 rounded-xl hover:shadow-xl shadow-md ">
                     <span className="py-2 my-2 font-semibold hover:bg-gray-200 hover:shadow-sm hover:rounded-xl cursor-pointer">

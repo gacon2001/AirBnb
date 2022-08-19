@@ -45,6 +45,7 @@
           .loginOption {
             display: flex;
             position: absolute;
+            z-index: 999 !important;
           }
         }
         a:hover {

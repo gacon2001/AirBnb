@@ -64,10 +64,7 @@ export default function LayoutTheme({ Element }) {
       {!isLoading && <Loading />}
       {isLoading && (
         <>
-          <header
-            className="header w-full relative z-50 shadow overflow-hidden"
-            ref={ref}
-          >
+          <header className="header w-full relative z-[100] shadow" ref={ref}>
             {width < 768 ? (
               <SearchButton type={"layout"} />
             ) : !isNavChoose ? (
@@ -106,7 +103,7 @@ export default function LayoutTheme({ Element }) {
                     </Link>
                   </div>
                   <div className="explore">
-                    <div className=" px-3 py-2 bg-white border border-gray-200 rounded-full h-max hover:shadow-md cursor-pointer  text-[#ff385c]">
+                    <div className=" px-3 py-2 bg-white border border-gray-200 rounded-full h-max hover:shadow-md cursor-pointer text-[#ff385c]">
                       <a href="/#nearby">
                         <FontAwesomeIcon icon={faSearch} />
                       </a>
