@@ -29,7 +29,8 @@
     "sass": "^1.54.0",
     "simplebar-react": "^2.4.1",
     "swiper": "^8.3.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "worker-loader": "^3.0.8"
   },
   "scripts": {
     "start": "react-scripts start",

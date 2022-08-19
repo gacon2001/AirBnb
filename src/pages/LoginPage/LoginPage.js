@@ -5,6 +5,9 @@ import "./loginPage.scss";
 import bgImg from "../../assets/login/bg-1.jpg";
 import { useDispatch } from "react-redux";
 import Map from "react-map-gl";
+import ReactMapGL, { FlyToInterpolator, NavigationControl } from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+
 import { userService } from "./../../services/userService";
 import {
   setUserAvatar,
@@ -15,6 +18,15 @@ import { localStorageService } from "./../../services/localStorageService";
 import avatarPic from "../../assets/user/default-avatar-bpthumb.png";
 import Loading from "./../../components/Loading/Loading";
 import Logo from "../../components/logo/Logo";
+import mapboxgl from "mapbox-gl";
+
+// The following is required to stop "npm build" from transpiling mapbox code.
+// notice the exclamation point in the import.
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+mapboxgl.workerClass =
+  // eslint-disable-next-line import/no-webpack-loader-syntax
+  require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const LoginPage = () => {
   let dispatch = useDispatch();
