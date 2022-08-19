@@ -52,15 +52,15 @@ export default function RoomListItem({ list }) {
                   <hr className="hidden w-10 mt-3 mb-1 border-b border-gray-200 border-opacity-60 sm:block" />
                   <span className="text-sm text-gray-300">
                     {item.guests} guest · {item.bedRoom} bedroom · {item.bath}{" "}
-                    shared bathrooms {`${item.wifi && "· Wifi "}`}{" "}
-                    {`${item.kitchen && "· Kitchen "}`}
-                    {`${item.pool && "· Pool "}`}
-                    {`${item.elevator && "· Elevator "}`}
-                    {`${item.hotTub && "· Hot Tub "}`}
-                    {`${item.gym && "· Gym "}`}
-                    {`${item.cableTV && "· TV "}`}
-                    {`${item.dryer && "· Dryer "}`}
-                    {`${item.heating && "· Heating "}`}
+                    shared bathrooms {item.wifi && "· Wifi "}
+                    {item.kitchen && "· Kitchen "}
+                    {item.pool && "· Pool "}
+                    {item.elevator && "· Elevator "}
+                    {item.hotTub && "· Hot Tub "}
+                    {item.gym && "· Gym "}
+                    {item.cableTV && "· TV "}
+                    {item.dryer && "· Dryer "}
+                    {item.heating && "· Heating "}
                   </span>
                 </Link>
               </div>

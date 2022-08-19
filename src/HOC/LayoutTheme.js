@@ -22,7 +22,7 @@ import { localStorageService } from "../services/localStorageService";
 
 export default function LayoutTheme({ Element }) {
   const [isNavChoose, setIsNavChoose] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { height, width } = useWindowDimensions();
   // console.log("width, height", width, height);
   let dispatch = useDispatch();

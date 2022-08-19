@@ -141,7 +141,7 @@ export default function RoomDetailPage() {
 
   return (
     <>
-      {!isLoading && <Loading />}
+      {!isLoading && <Loading type={"detail"} />}
       {isLoading && (
         <main>
           <div className="xl:w-[1120px] container mx-auto px-3">
