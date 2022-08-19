@@ -360,7 +360,7 @@ export default function RoomDetailPage() {
                       closable={false}
                       onClose={onClose}
                       visible={visible}
-                      width="425"
+                      width="400"
                       extra={
                         <Space>
                           <Button
@@ -645,7 +645,7 @@ export default function RoomDetailPage() {
                 </div>
               </div>
               {reviewList.length ? (
-                <div className="bottom flex flex-row md:flex-col flex-wrap md:max-h-[600px]">
+                <div className="bottom flex flex-row flex-wrap md:max-h-[600px]">
                   {reviewList.map((item, i) => {
                     if (i < 6) {
                       return (
