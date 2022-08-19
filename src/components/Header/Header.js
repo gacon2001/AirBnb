@@ -96,7 +96,7 @@ function Header() {
       </div>
       {width < 768 && (
         <div className="w-full h-max bg-white border-t border-gray-300 shadow-md fixed bottom-0 z-40 rounded-t-lg ">
-          <div className="w-[300px] py-3 mx-auto flex flex-row items-center justify-between">
+          <div className="w-[300px] mx-auto flex flex-row items-center justify-between">
             <div className="logo">
               <Link to="/">
                 <div className={`flex items-center h-12 text-[#ff385c]`}>
