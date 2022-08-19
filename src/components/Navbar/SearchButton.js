@@ -23,7 +23,7 @@ export default function SearchButton({ type }) {
   return (
     <>
       <div className={`navbar py-5`}>
-        <div className={`w-[450px] top mx-auto`}>
+        <div className={`w-[400px] sm:w-[500px] top mx-auto`}>
           <div className={`searchChoise flex flex-row justify-between`}>
             <div className="block mr-4">
               <Link to="/">
@@ -54,8 +54,10 @@ export default function SearchButton({ type }) {
         </div>
       </div>
       <Drawer
-        title="Where are you going?"
-        closable={false}
+        title={
+          <span className="text-lg font-semibold">Where are you going?</span>
+        }
+        closable={true}
         placement="right"
         onClose={onClose}
         visible={visible}

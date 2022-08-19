@@ -7,14 +7,14 @@ import "./homePage.scss";
 export default function HomePage() {
   return (
     <>
-      <header className="overflow-hidden">
+      <header className="overflow-x-hidden">
         <Header />
       </header>
-      <main className="mx-auto">
+      <main className="mx-auto overflow-x-hidden">
         <Nearby />
         <Anywhere />
       </main>
-      <footer>
+      <footer className="overflow-x-hidden">
         <Footer />
       </footer>
     </>

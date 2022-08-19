@@ -6,7 +6,7 @@ import { footerList } from "./footerList";
 
 function Footer() {
   return (
-    <div className="bg-gray-100 border-t border-gray-200">
+    <div className="bg-gray-100 border-t border-gray-200 ">
       <div className="xl:w-[1120px] container mx-auto px-4">
         <div className="top grid grid-cols-1 lg:grid-cols-4 text-left truncate">
           {footerList.map((list, i) => {

@@ -27,7 +27,7 @@ export default function RoomListPage() {
 
   return (
     <>
-      <main>
+      <main className="overflow-hidden">
         <RoomList
           list={listHotel}
           placeName={nameOfPlace}

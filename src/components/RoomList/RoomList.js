@@ -18,21 +18,22 @@ export default function RoomList({ list, placeName, longitude, latitude }) {
               {`Stays in ${placeName}`}
             </h2>
             <div className="option mb-4 space-x-1 space-y-2 text-gray-400 md:space-x-2 lg:mb-8">
-              <span className="px-2 py-1 text-xs duration-300 border border-gray-300 border-opacity-50 rounded-full cursor-pointer md:px-4 md:py-2 lg:text-sm active:scale-90 hover:border-gray-500">
-                Cancellation flexibility
-              </span>
-              <span className="px-2 py-1 text-xs duration-300 border border-gray-300 border-opacity-50 rounded-full cursor-pointer md:px-4 md:py-2 lg:text-sm active:scale-90 hover:border-gray-500">
-                Type of place
-              </span>
-              <span className="px-2 py-1 text-xs duration-300 border border-gray-300 border-opacity-50 rounded-full cursor-pointer md:px-4 md:py-2 lg:text-sm active:scale-90 hover:border-gray-500">
-                Price
-              </span>
-              <span className="px-2 py-1 text-xs duration-300 border border-gray-300 border-opacity-50 rounded-full cursor-pointer md:px-4 md:py-2 lg:text-sm active:scale-90 hover:border-gray-500">
-                Instant Book
-              </span>
-              <span className="px-2 py-1 text-xs duration-300 border border-gray-300 border-opacity-50 rounded-full cursor-pointer md:px-4 md:py-2 lg:text-sm active:scale-90 hover:border-gray-500">
-                More filter
-              </span>
+              {[
+                "Cancellation flexibility",
+                "Type of place",
+                "Price",
+                "Instant Book",
+                "More filter",
+              ].map((item, i) => {
+                return (
+                  <span
+                    key={i}
+                    className="px-2 py-1 inline-block text-xs duration-300 border border-gray-300 border-opacity-50 rounded-full cursor-pointer md:px-4 md:py-2 lg:text-sm active:scale-90 hover:border-gray-500"
+                  >
+                    {item}
+                  </span>
+                );
+              })}
             </div>
             <p className="mb-4 text-sm text-gray-400">
               Review COVID-19 travel restrictions before you book.{" "}
@@ -50,7 +51,9 @@ export default function RoomList({ list, placeName, longitude, latitude }) {
       </div>
       {width > 1024 && (
         <div className="right w-1/3 h-screen ">
-          <MapDetail longitude={longitude} latitude={latitude} />
+          <div className="w-full h-full cursor-grab touch-none select-none outline-none">
+            <MapDetail longitude={longitude} latitude={latitude} />
+          </div>
         </div>
       )}
     </div>

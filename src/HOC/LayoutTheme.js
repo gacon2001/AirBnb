@@ -64,7 +64,10 @@ export default function LayoutTheme({ Element }) {
       {!isLoading && <Loading />}
       {isLoading && (
         <>
-          <header className="header w-full relative z-50 shadow" ref={ref}>
+          <header
+            className="header w-full relative z-50 shadow overflow-hidden"
+            ref={ref}
+          >
             {width < 768 ? (
               <SearchButton type={"layout"} />
             ) : !isNavChoose ? (
@@ -94,7 +97,7 @@ export default function LayoutTheme({ Element }) {
             )}
             {width < 768 && (
               <div className="w-full h-max bg-white border-t border-gray-300 shadow-md fixed bottom-0 z-40 rounded-t-lg ">
-                <div className="w-[400px] py-3 mx-auto flex flex-row items-center justify-between">
+                <div className="w-[300px] py-3 mx-auto flex flex-row items-center justify-between">
                   <div className="logo">
                     <Link to="/">
                       <div className={`flex items-center h-12 text-[#ff385c]`}>
@@ -170,7 +173,7 @@ export default function LayoutTheme({ Element }) {
 
           <Element />
 
-          <footer>
+          <footer className="overflow-hidden">
             <Footer />
           </footer>
         </>

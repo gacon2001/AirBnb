@@ -12,7 +12,7 @@ function Nearby() {
         <h2 className="mb-4 text-3xl font-bold lg:mb-8 md:text-3xl lg:text-4xl">
           Explore Nearby
         </h2>
-        <div className="grid grid-cols-2  gap-x-1 gap-y-2 sm:grid-cols-3 lg:grid-cols-4 lg:gap-x-4">
+        <div className="grid grid-cols-2 gap-x-1 gap-y-2 sm:grid-cols-3 lg:grid-cols-4 lg:gap-x-4">
           {dataNearby.map((item, i) => {
             return (
               <Link

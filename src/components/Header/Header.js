@@ -51,7 +51,7 @@ function Header() {
   const { height, width } = useWindowDimensions();
   // console.log("width, height", width, height);
   return (
-    <div className="header w-screen h-screen relative">
+    <div className="header w-full h-[500px] md:w-screen md:h-screen relative overflow-x-hidden">
       <div className="absolute lg:w-full mx-auto top-0 left-1/2 z-20 -translate-x-1/2">
         {width < 768 ? (
           <div className="pt-12">
@@ -64,12 +64,11 @@ function Header() {
 
       <div className="w-full h-full">
         <Swiper
-          /* autoplay={{
-            delay: 4000,
-            disableOnInteraction: false,
-          }} */
+          pagination={{
+            dynamicBullets: true,
+          }}
           loop={true}
-          navigation={false}
+          navigation={true}
           modules={[Pagination, Navigation, Autoplay]}
           className="mySwiper w-full h-full"
         >
@@ -83,7 +82,7 @@ function Header() {
                     className=" w-full h-full object-cover object-center blur-xl "
                   />
                 </div>
-                <div className="w-3/4 xl:w-[1120px] mx-auto h-[500px] mt-7 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl shadow-white shadow-2xl">
+                <div className="w-3/4 h-1/2 xl:w-[1120px] mx-auto xl:h-[500px] mt-7 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl shadow-white shadow-2xl">
                   <img
                     src={pic.src}
                     alt=""
@@ -97,7 +96,7 @@ function Header() {
       </div>
       {width < 768 && (
         <div className="w-full h-max bg-white border-t border-gray-300 shadow-md fixed bottom-0 z-40 rounded-t-lg ">
-          <div className="w-[400px] py-3 mx-auto flex flex-row items-center justify-between">
+          <div className="w-[300px] py-3 mx-auto flex flex-row items-center justify-between">
             <div className="logo">
               <Link to="/">
                 <div className={`flex items-center h-12 text-[#ff385c]`}>
@@ -119,7 +118,7 @@ function Header() {
                     <span className="h-10 text-4xl text-gray-400">
                       {!userInfor && <FontAwesomeIcon icon={faCircleUser} />}
                       {userInfor && (
-                        <Tooltip title={userInfor.name} placement="rightTop">
+                        <Tooltip title={userInfor.name} placement="leftTop">
                           <Badge dot>
                             <Avatar
                               size={36}

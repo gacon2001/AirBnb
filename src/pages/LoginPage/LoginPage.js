@@ -91,15 +91,15 @@ const LoginPage = () => {
               <Logo />
             </div>
           </Link>
-          <div className="login absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 min-w-[480px] h-4/5 bg-white shadow-md lg:scale-100 md:scale-100 sm:scale-95 scale-90 rounded-md overflow-hidden">
-            <div className="img overflow-hidden h-1/4">
+          <div className="login absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 min-w-[480px] md:h-4/5 bg-white shadow-md lg:scale-100 md:scale-100 sm:scale-95 scale-90 rounded-md overflow-hidden">
+            <div className="img overflow-hidden hidden md:block md:h-1/4">
               <img
                 src={bgImg}
                 alt=""
                 className="w-full h-full object-cover object-center"
               />
             </div>
-            <div className="form p-12">
+            <div className="form p-12 md:pt-12 md:pb-8   ">
               <div className="title flex justify-between">
                 <h2 className="font-light text-5xl inline-block">Sign In</h2>
                 <div>
@@ -136,7 +136,7 @@ const LoginPage = () => {
                   onFinish={onFinish}
                   onFinishFailed={onFinishFailed}
                   autoComplete="off"
-                  className="py-12"
+                  className="pt-12 pb-4 md:pt-8 md:pb-6"
                 >
                   <Form.Item
                     name="email"
@@ -144,7 +144,7 @@ const LoginPage = () => {
                       {
                         required: true,
                         message:
-                          "Please input your E-mail! try: kha9x0159@gmail.com",
+                          "Please input your E-mail! try: sunday@123.com",
                       },
                       {
                         type: "email",

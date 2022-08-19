@@ -73,7 +73,7 @@ export default function NavbarSmall({ type, setIsNavChoose, isNavChoose }) {
           type === "user"
             ? "flex justify-between"
             : "grid grid-cols-[0.2fr,1.8fr,1.0fr,auto]"
-        } xl:w-[1120px] lg:w-[990px] md:w-[750px] mx-auto `}
+        } xl:w-[1120px] lg:w-[990px] md:w-[750px] w-[400px] mx-auto `}
       >
         <Link to="/">
           <div

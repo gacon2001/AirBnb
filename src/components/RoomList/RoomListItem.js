@@ -8,14 +8,16 @@ import { Pagination, Navigation } from "swiper";
 import { Link } from "react-router-dom";
 
 export default function RoomListItem({ list }) {
-  const array = ["1", "2", "3", "4", "5", "6", "7"];
   return (
     <>
       {list.map((item, i) => {
         // console.log("item", item);
         return (
-          <div key={i} className="item py-5 flex border-b">
-            <div className="img w-1/2 h-60 ">
+          <div
+            key={i}
+            className="item py-5 flex border-b scale-y-95 md:scale-y-100"
+          >
+            <div className="img w-1/2  md:h-60 ">
               <div className="px-3 overflow-hidden w-full h-full rounded-xl">
                 <Swiper
                   pagination={{
@@ -26,7 +28,7 @@ export default function RoomListItem({ list }) {
                   modules={[Pagination, Navigation]}
                   className="mySwiper w-full h-full object-cover object-center rounded-xl"
                 >
-                  {array.map((pic, i) => {
+                  {["1", "2", "3", "4", "5", "6", "7"].map((pic, i) => {
                     return (
                       <SwiperSlide key={i}>
                         <img
@@ -50,8 +52,15 @@ export default function RoomListItem({ list }) {
                   <hr className="hidden w-10 mt-3 mb-1 border-b border-gray-200 border-opacity-60 sm:block" />
                   <span className="text-sm text-gray-300">
                     {item.guests} guest · {item.bedRoom} bedroom · {item.bath}{" "}
-                    shared bathrooms · Wifi · Kitchen · Free parking · Washing
-                    Machine
+                    shared bathrooms {`${item.wifi && "· Wifi "}`}{" "}
+                    {`${item.kitchen && "· Kitchen "}`}
+                    {`${item.pool && "· Pool "}`}
+                    {`${item.elevator && "· Elevator "}`}
+                    {`${item.hotTub && "· Hot Tub "}`}
+                    {`${item.gym && "· Gym "}`}
+                    {`${item.cableTV && "· TV "}`}
+                    {`${item.dryer && "· Dryer "}`}
+                    {`${item.heating && "· Heating "}`}
                   </span>
                 </Link>
               </div>

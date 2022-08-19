@@ -7,7 +7,7 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Progress, Modal, notification, Drawer } from "antd";
+import { Progress, Modal, notification, Drawer, Space, Button } from "antd";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -19,6 +19,7 @@ import { locationService } from "./../../services/locationService";
 import { differenceInCalendarDays, format } from "date-fns";
 import useWindowDimensions from "../../HOOK/useWindowDimensions";
 import { useMemo } from "react";
+import { roomStats } from "./sampleRoomData";
 
 export default function RoomDetailPage() {
   let param = useParams();
@@ -172,17 +173,17 @@ export default function RoomDetailPage() {
               <div className="left w-full lg:w-3/5 pr-4">
                 <div className="left1 flex flex-row justify-between items-center pb-6 border-b ">
                   <div className="text-left">
-                    <h2 className="text-2xl font-semibold mb-2">
+                    <h2 className="text-xl md:text-2xl font-semibold mb-2">
                       Entire rental unit hosted by Sorainn
                     </h2>
-                    <span className="text-lg font-light text-gray-700  ">
+                    <span className="md:text-lg font-light text-gray-700  ">
                       <span> {roomItem.guests} guests </span> •{" "}
                       <span> {roomItem.bath} bedroom </span> •
                       <span> {roomItem.bedRoom} bed </span> •{" "}
                       <span> {roomItem.bath} bath</span>
                     </span>
                   </div>
-                  <div className="w-20 h-20 object-cover object-center rounded-full overflow-hidden ">
+                  <div className="w-14 h-14 md:w-20 md:h-20 object-cover object-center rounded-full overflow-hidden ">
                     <img
                       src={`https://i.pravatar.cc/150?u=${roomItem._id}`}
                       alt=""
@@ -191,7 +192,7 @@ export default function RoomDetailPage() {
                 </div>
                 <div className="left2 flex flex-col py-6 border-b ">
                   <div className="flex flex-row items-center py-3">
-                    <div className="icon w-1/12 flex justify-center items-center text-2xl text-gray-600">
+                    <div className="icon w-1/12 flex justify-center items-center text-xl md:text-2xl text-gray-600">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 64 64"
@@ -203,8 +204,8 @@ export default function RoomDetailPage() {
                         </g>
                       </svg>
                     </div>
-                    <div className="w-11/12 content text-left">
-                      <h3 className="text-xl font-semibold mb-1">
+                    <div className="w-11/12 content text-left ml-3">
+                      <h3 className="text-lg md:text-xl font-semibold mb-1">
                         Toàn bộ nhà
                       </h3>
                       <span className="tracking-wide font-light text-gray-700 ">
@@ -213,7 +214,7 @@ export default function RoomDetailPage() {
                     </div>
                   </div>
                   <div className="flex flex-row items-center py-3">
-                    <div className="icon w-1/12 flex justify-center items-center text-2xl text-gray-600">
+                    <div className="icon w-1/12 flex justify-center items-center text-xl md:text-2xl text-gray-600">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="40"
@@ -247,8 +248,8 @@ export default function RoomDetailPage() {
                         />
                       </svg>
                     </div>
-                    <div className="w-11/12 content text-left">
-                      <h3 className="text-xl font-semibold mb-1">
+                    <div className="w-11/12 content text-left ml-3">
+                      <h3 className="text-lg md:text-xl font-semibold mb-1">
                         Vệ sinh tăng cường
                       </h3>
                       <span className="tracking-wide font-light text-gray-700 ">
@@ -258,7 +259,7 @@ export default function RoomDetailPage() {
                     </div>
                   </div>
                   <div className="flex flex-row items-center py-3">
-                    <div className="icon w-1/12 flex justify-center items-center text-2xl text-gray-600">
+                    <div className="icon w-1/12 flex justify-center items-center text-xl md:text-2xl text-gray-600">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="40"
@@ -275,8 +276,8 @@ export default function RoomDetailPage() {
                         <g></g>
                       </svg>
                     </div>
-                    <div className=" w-11/12 content text-left">
-                      <h3 className="text-xl font-semibold mb-1">
+                    <div className=" w-11/12 content text-left ml-3">
+                      <h3 className="text-lg md:text-xl font-semibold mb-1">
                         Chủ nhà Siêu cấp
                       </h3>
                       <span className="tracking-wide font-light text-gray-700 ">
@@ -287,7 +288,7 @@ export default function RoomDetailPage() {
                     </div>
                   </div>
                   <div className="flex flex-row items-center py-3">
-                    <div className="icon w-1/12 flex justify-center items-center text-2xl text-gray-600">
+                    <div className="icon w-1/12 flex justify-center items-center text-xl md:text-2xl text-gray-600">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="40"
@@ -313,8 +314,8 @@ export default function RoomDetailPage() {
                         <line x1="3" y1="10" x2="21" y2="10" />
                       </svg>
                     </div>
-                    <div className="w-11/12 content text-left">
-                      <h3 className="text-xl font-semibold mb-1">
+                    <div className="w-11/12 content text-left ml-3">
+                      <h3 className="text-lg md:text-xl font-semibold mb-1">
                         Miễn phí hủy trong 48 giờ
                       </h3>
                       <span className="tracking-wide font-light text-gray-700 "></span>
@@ -322,7 +323,7 @@ export default function RoomDetailPage() {
                   </div>
                 </div>
                 <div className="left3 py-6 border-b text-left ">
-                  <div className="h-44 w-full overflow-hidden mb-3 text-ellipsis whitespace-normal">
+                  <div className=" max-h-44 w-full overflow-hidden mb-3 text-ellipsis whitespace-normal">
                     <p className="font-light tracking-wide text-gray-700 mt-2 text-justify">
                       {roomItem.description}
                     </p>
@@ -350,12 +351,26 @@ export default function RoomDetailPage() {
                       </button>
                     </div>
                     <Drawer
-                      title="Payment confirm"
+                      title={
+                        <span className="text-lg font-semibold">
+                          Payment confirm
+                        </span>
+                      }
                       placement="right"
                       closable={false}
                       onClose={onClose}
                       visible={visible}
-                      width="450"
+                      width="425"
+                      extra={
+                        <Space>
+                          <Button
+                            onClick={onClose}
+                            className="px-5 bg-white border h-max border-gray-200 rounded-full shadow-md cursor-pointer hover:shadow-lg duration-200 text-sm lg:text-base font-medium text-gray-500"
+                          >
+                            Cancel
+                          </Button>
+                        </Space>
+                      }
                     >
                       <div className="sticky top-0 w-full">
                         <div className="payment text-[#222222] text-base font-normal leading-5 text-left">
@@ -602,111 +617,42 @@ export default function RoomDetailPage() {
                   </span>
                   4,83 (18 reviews)
                 </h2>
-                <div className="stats flex flex-col flex-wrap h-52 mr-5">
-                  <div className="w-1/3 flex flex-row justify-between py-4 ">
-                    <span>Mức độ sạch sẽ</span>
-                    <div className="w-1/2 flex">
-                      <Progress
-                        percent={(4.8 / 5) * 100}
-                        size="small"
-                        showInfo={false}
-                        strokeColor={{
-                          "0%": "#717171",
-                          "100%": "#717171",
-                        }}
-                        className="mr-2"
-                      />
-                      4.8
-                    </div>
-                  </div>
-                  <div className="w-1/3 flex flex-row justify-between py-4">
-                    <span>Giá trị</span>
-                    <div className="w-1/2 flex">
-                      <Progress
-                        percent={(4.7 / 5) * 100}
-                        size="small"
-                        showInfo={false}
-                        strokeColor={{
-                          "0%": "#717171",
-                          "100%": "#717171",
-                        }}
-                        className="mr-2"
-                      />
-                      4.7
-                    </div>
-                  </div>
-                  <div className="w-1/3 flex flex-row justify-between py-4">
-                    <span>Liên lạc</span>
-                    <div className="w-1/2 flex">
-                      <Progress
-                        percent={(4.9 / 5) * 100}
-                        size="small"
-                        showInfo={false}
-                        strokeColor={{
-                          "0%": "#717171",
-                          "100%": "#717171",
-                        }}
-                        className="mr-2"
-                      />
-                      4.9
-                    </div>
-                  </div>
-                  <div className="w-1/3 flex flex-row justify-between py-4">
-                    <span>Nhận phòng</span>
-                    <div className="w-1/2 flex">
-                      <Progress
-                        percent={(4.7 / 5) * 100}
-                        size="small"
-                        showInfo={false}
-                        strokeColor={{
-                          "0%": "#717171",
-                          "100%": "#717171",
-                        }}
-                        className="mr-2"
-                      />
-                      4.7
-                    </div>
-                  </div>
-                  <div className="w-1/3 flex flex-row justify-between py-4">
-                    <span>Độ chính xác</span>
-                    <div className="w-1/2 flex">
-                      <Progress
-                        percent={(4.9 / 5) * 100}
-                        size="small"
-                        showInfo={false}
-                        strokeColor={{
-                          "0%": "#717171",
-                          "100%": "#717171",
-                        }}
-                        className="mr-2"
-                      />
-                      4.9
-                    </div>
-                  </div>
-                  <div className="w-1/3 flex flex-row justify-between py-4">
-                    <span>Vị trí</span>
-                    <div className="w-1/2 flex">
-                      <Progress
-                        percent={(4.6 / 5) * 100}
-                        size="small"
-                        showInfo={false}
-                        strokeColor={{
-                          "0%": "#717171",
-                          "100%": "#717171",
-                        }}
-                        className="mr-2"
-                      />
-                      4.6
-                    </div>
-                  </div>
+                <div className="stats flex flex-row md:flex-col flex-wrap md:h-52 mr-5">
+                  {roomStats.map((item, i) => {
+                    return (
+                      <div
+                        key={i}
+                        className="w-full md:w-1/3 flex flex-row justify-between py-4 "
+                      >
+                        <span>{item.nameItem}</span>
+                        <div className="w-1/2 flex">
+                          <Progress
+                            percent={(item.mark / 5) * 100}
+                            size="small"
+                            showInfo={false}
+                            strokeColor={{
+                              "0%": "#e61e4d",
+                              "50%": "#e31c5f",
+                              "100%": "#d70466",
+                            }}
+                            className="mr-2"
+                          />
+                          {item.mark}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               {reviewList.length ? (
-                <div className="bottom flex flex-col flex-wrap h-[600px]">
+                <div className="bottom flex flex-row md:flex-col flex-wrap md:max-h-[600px]">
                   {reviewList.map((item, i) => {
                     if (i < 6) {
                       return (
-                        <div className="w-1/2 h-40 pr-14 my-5" key={i}>
+                        <div
+                          className="w-full md:w-1/2 max-h-40 pr-5 md:pr-14 my-5"
+                          key={i}
+                        >
                           <div className="reviewTop flex flex-row items-center mb-5">
                             <div className="avatar w-16 h-16 object-cover object-center rounded-full overflow-hidden mr-4">
                               <img
@@ -734,7 +680,7 @@ export default function RoomDetailPage() {
                               </span>
                             </div>
                           </div>
-                          <div className="reviewBottom h-16 text-ellipsis overflow-hidden whitespace-normal ">
+                          <div className="reviewBottom max-h-16 text-ellipsis overflow-hidden whitespace-normal ">
                             <span>{item.content}</span>
                           </div>
                         </div>
