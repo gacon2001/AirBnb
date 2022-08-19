@@ -13,7 +13,7 @@ function Anywhere() {
           {dataAnywhere.map((item, i) => {
             return (
               <Link to="/somewhere" key={i}>
-                <div className="py-2 md:px-5 duration-300 lg:p-3 active:scale-105 active:bg-gray-200 active:bg-opacity-40 rounded-xl hover:scale-105 scale-95 sm:scale-100 ">
+                <div className="py-2 md:px-5 duration-300 lg:p-3 active:scale-105 active:bg-gray-200 active:bg-opacity-40 rounded-xl hover:scale-105 scale-[0.85] sm:scale-100 ">
                   <div className=" w-52 h-52 sm:h-52 sm:w-52 mb-2 overflow-hidden rounded-xl">
                     <div className="block overflow-hidden box-border object-cover object-center">
                       <img
