@@ -2,6 +2,7 @@ import Anywhere from "../../components/Anywhere/Anywhere";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Nearby from "../../components/Nearby/Nearby";
+import BackToTop from "./BackToTop";
 import "./homePage.scss";
 
 export default function HomePage() {
@@ -17,6 +18,9 @@ export default function HomePage() {
       <footer className="overflow-x-hidden">
         <Footer />
       </footer>
+      <div>
+        <BackToTop />
+      </div>
     </>
   );
 }
